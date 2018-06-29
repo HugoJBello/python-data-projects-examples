@@ -9,7 +9,7 @@ df_f05 = pd.read_csv("recursos_input/F05_1_MUN_2015.csv",sep=";",error_bad_lines
 df_f03 = pd.read_csv("recursos_input/F03_MUN_2015.csv",sep=";",error_bad_lines=False, encoding="utf-8")
 df_f10 = pd.read_csv("recursos_input/F10_MUN_2015.csv",sep=";",error_bad_lines=False, encoding="utf-8")
 df_siglas_cand = df_f03[["COD_CAND", "SIGLAS_CAND"]]
-
+ 
 nombres_municipios = ["Madrid", "Móstoles", "Alcalá de Henares", 
 							"Fuenlabrada", "Leganés", "Getafe", 
 							"Alcorcón", "Torrejón de Ardoz", "Parla", "Alcobendas",
@@ -57,6 +57,6 @@ for n_mun in nombres_municipios:
             df_agrupado_sumado[nueva_col]=df_agrupado_sumado[nueva_col].round(decimals = 3)
 
     print("guardando en fichero de salida")
-    dir_salida = "resultados"
+    dir_salida = "tmp"
     nombre_subfichero_salida = n_mun + "_F10_MUN_2015_denom_cand_agrupado_ruben_pc.csv"
     df_agrupado_sumado.to_csv(dir_salida + "/" + nombre_subfichero_salida, sep=";", index=False)
