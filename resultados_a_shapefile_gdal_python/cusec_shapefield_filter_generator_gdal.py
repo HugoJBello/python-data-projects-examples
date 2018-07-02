@@ -54,30 +54,34 @@ class CusecShapefiledFilterGDAL:
     def add_new_columns_to_layer(self, layer, column_array):
         for col in column_array:
             col_short=self.cut_column(col)
-            if "%" in col_short:
+            if ("%" in col_short):
                 new_field = ogr.FieldDefn(col_short, ogr.OFTReal) 
                 new_field.SetWidth(6)
                 new_field.SetPrecision(3)           
             else:
-                new_field = ogr.FieldDefn(col_short, ogr.OFTInteger)
-            layer.CreateField(new_field)
+                if ("RENTAM" in col_short):
+                    new_field = ogr.FieldDefn(col_short, ogr.OFTString)
+                else:
+                    new_field = ogr.FieldDefn(col_short, ogr.OFTInteger)
+            if (layer): layer.CreateField(new_field)
 
     #Rellenamos las columnas nuevas con los datos de los votos
     def add_data_in_new_columns_to_layer(self, layer, column_array,df_partidos):
-        feature = layer.GetNextFeature()
-        while feature:
-            for col in column_array:
-                cusec=feature.GetField("CUSEC")
-                try:
-                    value=df_partidos.loc[df_partidos["CUSEC"].isin([cusec])].iloc[0][col]
-                    col_short=self.cut_column(col)
-                    if (not "%" in col_short):
-                        feature.SetField(col_short, str(value))
-                    else:
-                        feature.SetField(col_short, value)
-                    layer.SetFeature(feature)
-                except: traceback.print_exc()
+        if(layer):
             feature = layer.GetNextFeature()
+            while feature:
+                for col in column_array:
+                    cusec=feature.GetField("CUSEC")
+                    try:
+                        value=df_partidos.loc[df_partidos["CUSEC"].isin([cusec])].iloc[0][col]
+                        col_short=self.cut_column(col)
+                        if (not "%" in col_short):
+                            feature.SetField(col_short, str(value))
+                        else:
+                            feature.SetField(col_short, value)
+                        layer.SetFeature(feature)
+                    except: traceback.print_exc()
+                feature = layer.GetNextFeature()
 
 
     def cut_column(self,column_str):

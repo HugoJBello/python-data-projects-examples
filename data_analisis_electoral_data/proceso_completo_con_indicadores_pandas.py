@@ -16,17 +16,17 @@ df_D3300217_2014[["CUSEC"]] = df_D3300217_2014[["CUSEC"]].astype(str)
 df_indicadores_madrid = pd.read_csv("recursos_input/C2011_ccaa13_Indicadores.csv",sep=",",error_bad_lines=False, encoding="utf-8")
 
 
-df_indicadores_madrid["%_pob_esp"] = 100 * df_indicadores_madrid["t4_1"]/(df_indicadores_madrid["t4_1"] + df_indicadores_madrid["t4_2"] +df_indicadores_madrid["t4_3"] + df_indicadores_madrid["t4_4"] + df_indicadores_madrid["t4_5"] + df_indicadores_madrid["t4_6"] + df_indicadores_madrid["t4_7"] + df_indicadores_madrid["t4_8"])
-df_indicadores_madrid["%_viv_pagada"] = 100 * df_indicadores_madrid["t18_1"]/ (df_indicadores_madrid["t18_1"] + df_indicadores_madrid["t18_2"] +df_indicadores_madrid["t18_3"] + df_indicadores_madrid["t18_4"] + df_indicadores_madrid["t18_5"] + df_indicadores_madrid["t18_6"])
-df_indicadores_madrid["%_viv_hipoteca"] = 100 * df_indicadores_madrid["t18_2"]/ (df_indicadores_madrid["t18_1"] + df_indicadores_madrid["t18_2"] +df_indicadores_madrid["t18_3"] + df_indicadores_madrid["t18_4"] + df_indicadores_madrid["t18_5"] + df_indicadores_madrid["t18_6"])
-df_indicadores_madrid["%_viv_alquiler"] = 100 * df_indicadores_madrid["t18_4"]/ (df_indicadores_madrid["t18_1"] + df_indicadores_madrid["t18_2"] +df_indicadores_madrid["t18_3"] + df_indicadores_madrid["t18_4"] + df_indicadores_madrid["t18_5"] + df_indicadores_madrid["t18_6"])
-df_indicadores_madrid["%_analf"] = 100 * df_indicadores_madrid["t12_1"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])
-df_indicadores_madrid["%_no_est"] = 100 * df_indicadores_madrid["t12_2"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])
-df_indicadores_madrid["%_est_1_gr"] = 100 * df_indicadores_madrid["t12_3"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])
-df_indicadores_madrid["%_est_2_gr"] = 100 * df_indicadores_madrid["t12_4"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])
-df_indicadores_madrid["%_est_3_gr"] = 100 * df_indicadores_madrid["t12_5"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])
-df_indicadores_madrid["%_est_noinf"] = 100 * df_indicadores_madrid["t12_6"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])
-df_indicadores_madrid["CUSEC"] = df_indicadores_madrid["cpro"].astype(str).apply(lambda x: x.rjust(2,"0")) + df_indicadores_madrid["cmun"].astype(str).apply(lambda x: x.rjust(3,"0"))+ df_indicadores_madrid["dist"].astype(str).apply(lambda x: x.rjust(2,"0")) + df_indicadores_madrid["secc"].astype(str).apply(lambda x: x.rjust(3,"0"))
+df_indicadores_madrid["%_pob_esp"] = (100 * df_indicadores_madrid["t4_1"]/(df_indicadores_madrid["t4_1"] + df_indicadores_madrid["t4_2"] +df_indicadores_madrid["t4_3"] + df_indicadores_madrid["t4_4"] + df_indicadores_madrid["t4_5"] + df_indicadores_madrid["t4_6"] + df_indicadores_madrid["t4_7"] + df_indicadores_madrid["t4_8"])).round(decimals = 3)
+df_indicadores_madrid["%_viv_pagada"] = (100 * df_indicadores_madrid["t18_1"]/ (df_indicadores_madrid["t18_1"] + df_indicadores_madrid["t18_2"] +df_indicadores_madrid["t18_3"] + df_indicadores_madrid["t18_4"] + df_indicadores_madrid["t18_5"] + df_indicadores_madrid["t18_6"])).round(decimals = 3)
+df_indicadores_madrid["%_viv_hipoteca"] = (100 * df_indicadores_madrid["t18_2"]/ (df_indicadores_madrid["t18_1"] + df_indicadores_madrid["t18_2"] +df_indicadores_madrid["t18_3"] + df_indicadores_madrid["t18_4"] + df_indicadores_madrid["t18_5"] + df_indicadores_madrid["t18_6"])).round(decimals = 3)
+df_indicadores_madrid["%_viv_alquiler"] = (100 * df_indicadores_madrid["t18_4"]/ (df_indicadores_madrid["t18_1"] + df_indicadores_madrid["t18_2"] +df_indicadores_madrid["t18_3"] + df_indicadores_madrid["t18_4"] + df_indicadores_madrid["t18_5"] + df_indicadores_madrid["t18_6"])).round(decimals = 3)
+df_indicadores_madrid["%_analf"] = (100 * df_indicadores_madrid["t12_1"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])).round(decimals = 3)
+df_indicadores_madrid["%_no_est"] = (100 * df_indicadores_madrid["t12_2"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])).round(decimals = 3)
+df_indicadores_madrid["%_est_1_gr"] = (100 * df_indicadores_madrid["t12_3"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])).round(decimals = 3)
+df_indicadores_madrid["%_est_2_gr"] = (100 * df_indicadores_madrid["t12_4"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])).round(decimals = 3)
+df_indicadores_madrid["%_est_3_gr"] = (100 * df_indicadores_madrid["t12_5"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])).round(decimals = 3)
+df_indicadores_madrid["%_est_noinf"] = (100 * df_indicadores_madrid["t12_6"]/(df_indicadores_madrid["t12_1"] + df_indicadores_madrid["t12_2"] +df_indicadores_madrid["t12_3"] + df_indicadores_madrid["t12_4"] + df_indicadores_madrid["t12_5"] + df_indicadores_madrid["t12_6"])).round(decimals = 3)
+df_indicadores_madrid["CUSEC"] = (df_indicadores_madrid["cpro"].astype(str).apply(lambda x: x.rjust(2,"0")) + df_indicadores_madrid["cmun"].astype(str).apply(lambda x: x.rjust(3,"0"))+ df_indicadores_madrid["dist"].astype(str).apply(lambda x: x.rjust(2,"0")) + df_indicadores_madrid["secc"].astype(str).apply(lambda x: x.rjust(3,"0")))
 
 df_indicadores_madrid.to_csv("recursos_input/C2011_ccaa13_Indicadores_tratado.csv", sep=";", index=False)
 
@@ -83,12 +83,12 @@ for n_mun in nombres_municipios:
         
     if (cod_ccaa==12):
         print("agregando indicadores")
-        print(df_indicadores_madrid.columns[-9:].tolist())
+        print(df_indicadores_madrid.columns[-11:].tolist())
 
-        df_resultado=df_resultado.merge(df_indicadores_madrid[df_indicadores_madrid.columns[-9:].tolist()], left_on='CUSEC', right_on='CUSEC',left_index=True, how='left')
+        df_resultado=df_resultado.merge(df_indicadores_madrid[df_indicadores_madrid.columns[-11:].tolist()], left_on='CUSEC', right_on='CUSEC',left_index=True, how='left')
         
 
     print("guardando en fichero de salida")
     dir_salida = "tmp"
     nombre_subfichero_salida = n_mun + "_F10_MUN_2015_denom_cand_agrupado_ruben_pc.csv"
-    df_resultado.to_csv(dir_salida + "/" + nombre_subfichero_salida, sep=";", index=False)
+    df_resultado.to_csv(dir_salida + "/" + nombre_subfichero_salida, sep=";", index=False, encoding="utf-8")

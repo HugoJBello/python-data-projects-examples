@@ -25,14 +25,14 @@ class DataReaderPandas:
             self.resultados = self.resultados + [resultado]
 
     def extraer_datos_partidos(self,fichero):
-        df_resultados_mun = pd.read_csv(fichero,sep=";")
+        df_resultados_mun = pd.read_csv(fichero,sep=";",error_bad_lines=False, encoding="latin-1")
         #print(df_resultados_mun.iloc[1]['P.P.'])
         return df_resultados_mun
 
     def extraer_nombres_partidos(self,datos_partidos):
         lista= list(datos_partidos)
         for col in ['CUSEC','PROV','DIST','SECC_CEN']:
-            lista.remove(col)
+            if(col in lista): lista.remove(col)
         return lista        
 
 
