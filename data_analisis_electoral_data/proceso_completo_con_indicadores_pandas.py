@@ -43,9 +43,9 @@ nombres_municipios = ["Madrid", "Móstoles", "Alcalá de Henares",
 							"Paracuellos de Jarama", "Mejorada del Campo", "Algete"]
 
 for n_mun in nombres_municipios:
-    cod_municipio = df_f05.loc[df_f05['MUNICIPIO'] == n_mun]['COD_MUN'].values.tolist()[0] 			
-    cod_ccaa = df_f05.loc[df_f05['MUNICIPIO'] == n_mun]['COD_CCAA'].values.tolist()[0] 
-    cod_prov = df_f05.loc[df_f05['MUNICIPIO'] == n_mun]['COD_PROV'].values.tolist()[0] 
+    cod_municipio = df_f05.loc[df_f05['MUNICIPIO'] == n_mun]['COD_MUN'].values.tolist()[0]
+    cod_ccaa = df_f05.loc[df_f05['MUNICIPIO'] == n_mun]['COD_CCAA'].values.tolist()[0]
+    cod_prov = df_f05.loc[df_f05['MUNICIPIO'] == n_mun]['COD_PROV'].values.tolist()[0]
     print(cod_ccaa)
     print("----------------------------------------")
     print("filtrando datos para municipio " + n_mun)

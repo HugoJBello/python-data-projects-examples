@@ -6,7 +6,7 @@ from data_reader_pandas import ResultadosEnMunicipio
 def main():
     #Carpeta que contiene los csv con los datos de los resultados de las elecciones
     data_folder="C:/hugo_documentos/otros/github/python-data-projects-examples/data_analisis_electoral_data/tmp"
-    
+    elecciones = "gen_2016"
     #Carpeta de salida
     output_folder="data"
 
@@ -20,6 +20,6 @@ def main():
 
     #Añadimos los resultados de las elecciones y cortamos el shapefile
     cusecShapefileFilter = CusecShapefiledFilterGDAL(shapefile,output_folder,lista_resultados)
-    cusecShapefileFilter.extract_layer_from_nmun_and_add_data()
+    cusecShapefileFilter.extract_layer_from_nmun_and_add_data(elecciones)
 if __name__ == '__main__':
 	main()

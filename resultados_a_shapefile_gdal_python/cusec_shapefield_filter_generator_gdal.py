@@ -28,23 +28,23 @@ class CusecShapefiledFilterGDAL:
         self.data_source = ogr.Open(self.data_shapefile, True)  # True allows to edit the shapefile
         self.layer = self.data_source.GetLayer()
     
-    def extract_layer_from_nmun_and_add_data(self):
+    def extract_layer_from_nmun_and_add_data(self,elecciones):
         resultados = self.lista_resultados
         for resultado in resultados:
             nmun=resultado.nombre_municipio
             column_array =resultado.nombres_partidos
             df_partidos=resultado.datos_partidos
 
-            layer=self.extract_layer_by_nmun(nmun)
+            layer=self.extract_layer_by_nmun(nmun, elecciones)
             self.add_new_columns_to_layer(layer,column_array)
             self.add_data_in_new_columns_to_layer(layer,column_array,df_partidos)
             layer=None
 
 
     #Extrameos un nuevo layer a partir del nombre del municipio usando el shapefile de toda la comunidad de madrid
-    def extract_layer_by_nmun(self,nmun):
+    def extract_layer_by_nmun(self,nmun, elecciones):
         sql ="SELECT * FROM " + self.layer_name + " WHERE NMUN = '" + nmun+ "';COMMIT"
-        new_layer_name = nmun +"_"+ self.layer_name
+        new_layer_name = nmun +"_" + elecciones+"_"+ self.layer_name
         result = self.data_source.ExecuteSQL(sql, dialect='SQLITE')
         layer_new = self.data_source.CopyLayer(result, new_layer_name)
         result=None
