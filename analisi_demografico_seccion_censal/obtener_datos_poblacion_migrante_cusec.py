@@ -19,19 +19,21 @@ print(df_nacionalidad_2017)
 
 df_resultado = df_nacionalidad_2017.copy()[["CUSEC"]]
 
-df_nacionalidad_2017["%EXTRANGEROS_2017"] = df_nacionalidad_2017["Total Extranjeros"]/df_nacionalidad_2017["Total Población"]*100
-df_nacionalidad_2016["%EXTRANGEROS_2016"] = df_nacionalidad_2016["Total Extranjeros"]/df_nacionalidad_2016["Total Población"]*100
-df_nacionalidad_2015["%EXTRANGEROS_2015"] = df_nacionalidad_2015["Total Extranjeros"]/df_nacionalidad_2015["Total Población"]*100
-df_nacionalidad_2011["%EXTRANGEROS_2011"] = df_nacionalidad_2011["Total Extranjeros"]/df_nacionalidad_2011["Total Población"]*100
+df_nacionalidad_2017["%EXTR_17"] = df_nacionalidad_2017["Total Extranjeros"]/df_nacionalidad_2017["Total Población"]*100
+df_nacionalidad_2016["%EXTR_16"] = df_nacionalidad_2016["Total Extranjeros"]/df_nacionalidad_2016["Total Población"]*100
+df_nacionalidad_2015["%EXTR_15"] = df_nacionalidad_2015["Total Extranjeros"]/df_nacionalidad_2015["Total Población"]*100
+df_nacionalidad_2011["%EXTR_11"] = df_nacionalidad_2011["Total Extranjeros"]/df_nacionalidad_2011["Total Población"]*100
 
-df_resultado = df_resultado.merge(df_nacionalidad_2011[["CUSEC","%EXTRANGEROS_2011"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left')
-print(df_resultado)
-df_resultado = df_resultado.merge(df_nacionalidad_2015[["CUSEC","%EXTRANGEROS_2015"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left')
-print(df_resultado)
-df_resultado = df_resultado.merge(df_nacionalidad_2016[["CUSEC","%EXTRANGEROS_2016"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').reset_index()
-df_resultado = df_resultado.merge(df_nacionalidad_2017[["CUSEC","%EXTRANGEROS_2017"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').reset_index()
-df_resultado.xs('CUSEC', axis=1, drop_level=True)
+df_resultado = df_resultado.merge(df_nacionalidad_2011[["CUSEC","%EXTR_11"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado = df_resultado.merge(df_nacionalidad_2015[["CUSEC","%EXTR_15"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado = df_resultado.merge(df_nacionalidad_2016[["CUSEC","%EXTR_16"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado = df_resultado.merge(df_nacionalidad_2017[["CUSEC","%EXTR_17"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
 
+
+#del df_resultado["level_0"]
+#del df_resultado["index"]
+
+print(df_resultado)
 
 print("guardando en fichero de salida")
 dir_salida = "tmp"

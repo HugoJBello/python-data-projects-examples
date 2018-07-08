@@ -5,7 +5,8 @@ from data_reader_pandas import ResultadosEnMunicipio
 
 def main():
     #Carpeta que contiene los csv con los datos de los resultados de las elecciones
-    data_folder="C:/hugo_documentos/otros/github/python-data-projects-examples/data_analisis_electoral_data/tmp"
+    #data_folder="C:/hugo_documentos/otros/github/python-data-projects-examples/data_analisis_electoral_data/tmp"
+    data_folder = "C:/hugo_documentos/repos_github/python-data-projects-examples/data_analisis_electoral_data/tmp"
     elecciones = "gen_2015"
     #Carpeta de salida
     output_folder="data"
