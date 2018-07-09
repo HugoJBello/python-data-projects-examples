@@ -4,7 +4,6 @@ import os
 import pandas as pd
 
 
-df_f05 = pd.read_csv("data/F05_1_GEN_2016.csv",sep=";",error_bad_lines=False, encoding="utf-8")
 df_nacionalidad_2017 = pd.read_csv("data/pob_pais_nacionalidad_2017.csv",sep=",",skiprows=5 , encoding="utf-8")
 df_nacionalidad_2016 = pd.read_csv("data/pob_pais_nacionalidad_2016.csv",sep=",",skiprows=5, encoding="utf-8")
 df_nacionalidad_2015 = pd.read_csv("data/pob_pais_nacionalidad_2015.csv",sep=",",skiprows=5, encoding="utf-8")
