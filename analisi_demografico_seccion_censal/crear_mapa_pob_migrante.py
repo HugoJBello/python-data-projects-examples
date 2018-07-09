@@ -27,7 +27,7 @@ def add_data_in_new_columns_to_layer(layer, column_array, df_partidos):
                 cusec = feature.GetField("CUSEC")
                 try:
                     value = df_partidos.loc[df_partidos["CUSEC"].isin([cusec])].iloc[0][col]
-                    col_short = col
+                    col_short = col[0:9]
                     if (not "%" in col_short):
                         feature.SetField(col_short, str(value))
                     else:
@@ -39,7 +39,7 @@ def add_data_in_new_columns_to_layer(layer, column_array, df_partidos):
     return layer
 
 if __name__ == '__main__':
-    shapefile = "data/shapefile_madrid/SECC_CPV_E_20111101_01_R_INE_MADRID.shp"
+    shapefile = "data/SECC_CPV_E_20111101_01_R_INE_MADRID.shp"
     data_source = ogr.Open(shapefile,True)  # True allows to edit the shapefile
     layer = data_source.GetLayer()
 

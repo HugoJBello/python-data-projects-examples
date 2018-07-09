@@ -23,10 +23,20 @@ df_nacionalidad_2016["%EXTR_16"] = df_nacionalidad_2016["Total Extranjeros"]/df_
 df_nacionalidad_2015["%EXTR_15"] = df_nacionalidad_2015["Total Extranjeros"]/df_nacionalidad_2015["Total Población"]*100
 df_nacionalidad_2011["%EXTR_11"] = df_nacionalidad_2011["Total Extranjeros"]/df_nacionalidad_2011["Total Población"]*100
 
-df_resultado = df_resultado.merge(df_nacionalidad_2011[["CUSEC","%EXTR_11"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
-df_resultado = df_resultado.merge(df_nacionalidad_2015[["CUSEC","%EXTR_15"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
-df_resultado = df_resultado.merge(df_nacionalidad_2016[["CUSEC","%EXTR_16"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
-df_resultado = df_resultado.merge(df_nacionalidad_2017[["CUSEC","%EXTR_17"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado = df_resultado.merge(df_nacionalidad_2011[["CUSEC","%EXTR_11","Total Población"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado=df_resultado.rename(index=str, columns={"Total Población": "POBL_11"})
+
+df_resultado = df_resultado.merge(df_nacionalidad_2015[["CUSEC","%EXTR_15","Total Población"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado=df_resultado.rename(index=str, columns={"Total Población": "POBL_15"})
+
+df_resultado = df_resultado.merge(df_nacionalidad_2016[["CUSEC","%EXTR_16","Total Población"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado=df_resultado.rename(index=str, columns={"Total Población": "POBL_16"})
+
+df_resultado = df_resultado.merge(df_nacionalidad_2017[["CUSEC","%EXTR_17","Total Población"]], left_on='CUSEC', right_on='CUSEC', left_index=False, how='left').round(decimals = 2)
+df_resultado=df_resultado.rename(index=str, columns={"Total Población": "POBL_17"})
+
+cols_ordenadas = ["CUSEC","%EXTR_11","%EXTR_15","%EXTR_16","%EXTR_17","POBL_11","POBL_15","POBL_16","POBL_17"]
+df_resultado=df_resultado[cols_ordenadas]
 
 
 #del df_resultado["level_0"]
