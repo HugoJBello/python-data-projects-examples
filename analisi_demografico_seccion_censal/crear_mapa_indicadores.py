@@ -3,6 +3,8 @@ from osgeo import ogr
 import pandas as pd
 import os
 import sys
+sys._enablelegacywindowsfsencoding()
+import sys
 
 def add_new_columns_to_layer(layer, column_array):
     for col in column_array:
@@ -52,7 +54,7 @@ def extract_layer_by_nmun(nmun, layer_name, data_source):
 
 
 if __name__ == '__main__':
-    shapefile = "data/shapefiles/SECC_CPV_E_20111101_01_R_INE_MADRID.shp"
+    shapefile = "data/SECC_CPV_E_20111101_01_R_INE_MADRID.shp"
     data_source = ogr.Open(shapefile, True)  # True allows to edit the shapefile
     layer = data_source.GetLayer()
     suffix = "indicadores_demograficos_2011_c2011"
