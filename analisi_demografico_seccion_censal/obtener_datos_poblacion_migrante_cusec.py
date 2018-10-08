@@ -12,7 +12,7 @@ df_nacionalidad_2011 = pd.read_csv("data/pob_pais_nacionalidad_2011.csv",sep=","
 df_nacimiento_2017 = pd.read_csv("data/pob_pais_nacimiento_2017.csv",sep=",",skiprows=5, encoding="utf-8")
 df_nacimiento_2016 = pd.read_csv("data/pob_pais_nacimiento_2016.csv",sep=",",skiprows=5, encoding="utf-8")
 df_nacimiento_2015 = pd.read_csv("data/pob_pais_nacimiento_2015.csv",sep=",",skiprows=5, encoding="utf-8")
-df_nacimiento_2011 = pd.read_csv("data/pob_pais_nacimiento_2011.csv",sep=",",skiprows=5, encoding="utf-8")
+df_nacimiento_2011  = pd.read_csv("data/pob_pais_nacimiento_2011.csv",sep=",",skiprows=5, encoding="utf-8")
 
 print(df_nacionalidad_2017)
 
