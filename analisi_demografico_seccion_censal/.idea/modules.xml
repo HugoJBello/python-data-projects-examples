@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/analisi_demografico_seccion_censal.iml" filepath="$PROJECT_DIR$/.idea/analisi_demografico_seccion_censal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../extract_points_from_feature/.idea/extract_points_from_feature.iml" filepath="$PROJECT_DIR$/../extract_points_from_feature/.idea/extract_points_from_feature.iml" />
     </modules>
   </component>
 </project>
