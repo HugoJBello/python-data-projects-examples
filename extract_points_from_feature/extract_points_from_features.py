@@ -1,6 +1,8 @@
 from osgeo import ogr
-
-shapefile = "data/Alcorcón_indicadores_demograficos_2011_c2011.shp"
+from osgeo import osr
+src = osr.SpatialReference()
+src.SetWellKnownGeogCS( "WGS84" );
+shapefile = "data/SECC_CPV_E_20111101_01_R_INE_MADRID_cs_epsg_2.shp"
 data_source = ogr.Open(shapefile,False)  # True allows to edit the shapefile
 layer = data_source.GetLayer()
 
