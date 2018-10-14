@@ -3,3 +3,4 @@ data/
 .idea/
 .vscode/
 geoJSON_output/
+node_modules/
