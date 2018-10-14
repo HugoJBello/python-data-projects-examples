@@ -10,7 +10,7 @@ polylines_csv_file = "encoded_polylines_madrid.csv"
 nmuns = ["Alcorcón"]
 
 def obtain_csv_files():
-    return ["csv_polylines_municipios/Algete_polylines_2011_ccaa12.csv"]
+    return ["csv_polylines_municipios/Alcorcón_polylines_2011_ccaa12.csv"]
 
 def obtener_url_venta_csv(row):
     polyline_encoded = row["URLENCODED"]
@@ -24,8 +24,8 @@ def obtener_url_alquiler_csv(row):
 
 def main():
     #driver = webdriver.Edge()
-    driver = webdriver.Chrome()
-    #driver = webdriver.Ie()
+    #driver = webdriver.Chrome()
+    driver = webdriver.Ie()
     #driver = webdriver.Firefox()
     for csv_file in obtain_csv_files():
         print(csv_file)
@@ -44,6 +44,9 @@ def main():
                 df_polylines_municipio.loc[index,"V_VENTA"]= datos["number_of_items"]
             except:
                 print("error")
+                saltar_captcha(driver)
+                df_polylines_municipio.loc[index, "P_VENTA"] = 0
+                df_polylines_municipio.loc[index, "V_VENTA"] = 0
 
             url_alquiler = obtener_url_alquiler_csv(row)
             print("obteniendo datos de alquiler " + url_alquiler)
@@ -54,6 +57,7 @@ def main():
                 df_polylines_municipio.loc[index,"V_ALQL"]= datos["number_of_items"]
             except:
                 print("error")
+                saltar_captcha(driver)
 
         dir_salida = "tmp"
         nombre_subfichero_salida = csv_file.replace(".csv","").split("/")[1] + "_scraped.csv"
@@ -62,6 +66,7 @@ def main():
 
 
 def obtener_precio_y_anuncios(driver,url):
+    saltar_captcha(driver)
     resultado = {}
     driver.get(url)
     driver.set_page_load_timeout(20)
@@ -69,7 +74,7 @@ def obtener_precio_y_anuncios(driver,url):
 
     random_int = 8573 + random.randint(-3, 3)
     driver.execute_script("window.scrollTo(0, " + str(random_int) + ");")
-    time.sleep(random.uniform(0.5, 0.9))
+    time.sleep(random.uniform(0.5, 1.9))
     average_prize = driver.find_elements_by_class_name("items-average-price")[0].text.replace("Average price:","").replace("eur/m²","").replace(",", "").strip()
     print(average_prize)
     number_of_items = driver.find_elements_by_class_name("h1-simulated")[0].text.split(" ")[0].strip()
@@ -78,6 +83,17 @@ def obtener_precio_y_anuncios(driver,url):
     resultado["average_prize"] = average_prize
     resultado["number_of_items"] = number_of_items
     return resultado
+
+def saltar_captcha(driver):
+    try:
+        capcha_box = driver.find_element_by_xpath("li[contains(text(),'Your custom search area')]")
+    except:
+        time.sleep(random.uniform(0.5, 0.9))
+        print("capcha saltado")
+        time.sleep(random.uniform(2.5, 2.9))
+
+
+
 
 if __name__ == '__main__':
     main()
