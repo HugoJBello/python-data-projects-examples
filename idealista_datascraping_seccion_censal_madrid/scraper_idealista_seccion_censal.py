@@ -1,19 +1,29 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from pymongo import MongoClient
 import time
 import random
 import pandas as pd
 from datetime import datetime
-import sys
+import sys, os
+#pip 3 install dnspython
+#pip 3 install pandas
+
 sys.getfilesystemencoding()
 sys._enablelegacywindowsfsencoding()
 
 polylines_csv_file = "encoded_polylines_madrid.csv"
 nmuns = ["Alcorcón"]
-
+#client = MongoClient('mongodb://freshkore:1234@ds231460.mlab.com:31460/real-state-db')
+client = MongoClient('mongodb+srv://fresh:1234@cluster0-ojz1y.mongodb.net/real-state-db?retryWrites=true')
+db =client['real-state-db']
+cusecs_idealista_collection = db.cusecs_idealista
 fecha_ejec = str(datetime.now())
+csv_dir = "csv_polylines_municipios"
+
 def obtain_csv_files():
-    return ["csv_polylines_municipios/test_polylines_2011_ccaa12.csv"]
+    #return ["csv_polylines_municipios/test_polylines_2011_ccaa12.csv"]
+    return os.listdir(csv_dir)
 
 def obtener_url_venta_csv(row):
     polyline_encoded = row["URLENCODED"]
@@ -32,50 +42,60 @@ def main():
     driver = webdriver.Firefox()
     for csv_file in obtain_csv_files():
         print(csv_file)
-        df_polylines_municipio = pd.read_csv(csv_file, sep=";", error_bad_lines=False, encoding="utf-8")
-        df_polylines_municipio["P_VENTA"] = ""
-        df_polylines_municipio["V_VENTA"] = ""
-        df_polylines_municipio["P_ALQL"] = ""
-        df_polylines_municipio["V_ALQL"] = ""
-        df_polylines_municipio["FECHA"] = ""
+        df_polylines_municipio = pd.read_csv(csv_dir+"/"+csv_file, sep=";", error_bad_lines=False, encoding="utf-8")
+        df_polylines_municipio["P_VENTA"] = 0
+        df_polylines_municipio["N_VENTA"] = 0
+        df_polylines_municipio["P_ALQL"] = 0
+        df_polylines_municipio["N_ALQL"] = 0
+        df_polylines_municipio["FECHA"] = fecha_ejec
+        df_polylines_municipio.reset_index()
 
         for index, row in df_polylines_municipio.iterrows():
             url_venta = obtener_url_venta_csv(row)
-            print("obteniendo datos de venta " + url_venta)
+            data = dict()
+            data["fecha"] = fecha_ejec
+            data["p_venta"] = 0
+            data["n_venta"] = 0
+            data["p_alql"] = 0
+            data["n_alql"] = 0
+            data["cusec"] = int(df_polylines_municipio.loc[index,"CUSEC"])
+            data["nmun"] = df_polylines_municipio.loc[index,"NMUN"]
+            data["_id"] = str(df_polylines_municipio.loc[index,"CUSEC"]) + "--" + fecha_ejec.replace(":","__").replace(" ","_")
+            print("obteniendo datos de venta para municipio " + data["nmun"] +" en url:\n" + url_venta)
             try:
-                datos = obtener_precio_y_anuncios(driver,url_venta)
+                datos_scraping = obtener_precio_y_anuncios(driver,url_venta)
                 cusec = row["CUSEC"]
-                df_polylines_municipio.loc[index,"P_VENTA"]= datos["average_prize"]
-                df_polylines_municipio.loc[index,"V_VENTA"]= datos["number_of_items"]
+                df_polylines_municipio.loc[index,"P_VENTA"]= datos_scraping["average_prize"]
+                df_polylines_municipio.loc[index,"N_VENTA"]= datos_scraping["number_of_items"]
                 df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
+                data["p_venta"] = datos_scraping["average_prize"]
+                data["n_venta"] = datos_scraping["number_of_items"]
 
             except:
                 print("error")
-                df_polylines_municipio.loc[index, "P_VENTA"] = 0
-                df_polylines_municipio.loc[index, "V_VENTA"] = 0
-                df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
-
                 saltar_captcha(driver)
 
             url_alquiler = obtener_url_alquiler_csv(row)
-            print("obteniendo datos de alquiler " + url_alquiler)
+            print("obteniendo datos de alquiler para municipio " + data["nmun"] +" en url:\n" + url_alquiler)
             try:
-                datos = obtener_precio_y_anuncios(driver,url_alquiler)
+                datos_scraping = obtener_precio_y_anuncios(driver,url_alquiler)
                 cusec = row["CUSEC"]
-                df_polylines_municipio.loc[index,"P_ALQL"]= datos["average_prize"]
-                df_polylines_municipio.loc[index,"V_ALQL"]= datos["number_of_items"]
+                df_polylines_municipio.loc[index,"P_ALQL"]= datos_scraping["average_prize"]
+                df_polylines_municipio.loc[index,"N_ALQL"]= datos_scraping["number_of_items"]
                 df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
+                data["p_alql"] = datos_scraping["average_prize"]
+                data["n_alql"] = datos_scraping["number_of_items"]
+
             except:
                 print("error")
-                df_polylines_municipio.loc[index, "P_ALQL"] = 0
-                df_polylines_municipio.loc[index, "V_ALQL"] = 0
-                df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
                 saltar_captcha(driver)
+
+            guardar_en_mongodb(data)
 
         dir_salida = "tmp"
         nombre_subfichero_salida = csv_file.replace(".csv","").split("/")[1] + "_scraped.csv"
         print("guardando " + nombre_subfichero_salida)
-        df_polylines_municipio = df_polylines_municipio[["CUSEC","NMUN","P_VENTA","V_VENTA","P_ALQL","V_ALQL","FECHA"]]
+        df_polylines_municipio = df_polylines_municipio[["CUSEC","NMUN","P_VENTA","N_VENTA","P_ALQL","N_ALQL","FECHA"]]
         df_polylines_municipio.to_csv(dir_salida +"/" + nombre_subfichero_salida, sep=";", index=False)
 
 
@@ -108,7 +128,8 @@ def saltar_captcha(driver):
     except NoSuchElementException:
         pass
 
-
+def guardar_en_mongodb(data):
+    cusecs_idealista_collection.save(data)
 
 
 
