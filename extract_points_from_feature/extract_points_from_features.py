@@ -12,8 +12,9 @@ feature = layer.GetNextFeature()
 while feature:
     geom = feature.GetGeometryRef()
     cusec =feature.GetField("CUSEC")
+    nmun =feature.GetField("NMUN")
     polyline_dic = geom.Boundary().ExportToJson()
-    filename =  "geoJson_output/" + cusec + "__2011_ine_geojson.json"
+    filename =  "geoJson_output/" + cusec +"__"+ nmun +"__2011_ine_geojson.json"
     text_file = open(filename, "w")
     text_file.write(polyline_dic)
     text_file.close()

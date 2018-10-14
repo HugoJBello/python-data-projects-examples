@@ -1,0 +1,17 @@
+{
+  "name": "extract_points_from_feature",
+  "version": "1.0.0",
+  "description": "",
+  "main": "obtain_encoded_polylines_from_geojson.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mapbox/polyline": "^1.0.0",
+    "fs": "0.0.1-security",
+    "geojson-polyline": "^1.0.2",
+    "google-polyline": "^1.0.0"
+  }
+}
