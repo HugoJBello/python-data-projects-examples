@@ -6,6 +6,8 @@ import random
 import pandas as pd
 from datetime import datetime
 import sys, os
+from random import shuffle
+
 #pip 3 install dnspython
 #pip 3 install pandas
 
@@ -23,7 +25,9 @@ csv_dir = "csv_polylines_municipios"
 
 def obtain_csv_files():
     #return ["csv_polylines_municipios/test_polylines_2011_ccaa12.csv"]
-    return os.listdir(csv_dir)
+    files = os.listdir(csv_dir)
+    shuffle(files)
+    return files
 
 def obtener_url_venta_csv(row):
     polyline_encoded = row["URLENCODED"]
@@ -37,9 +41,9 @@ def obtener_url_alquiler_csv(row):
 
 def main():
     #driver = webdriver.Edge()
-    driver = webdriver.Chrome()
+    #driver = webdriver.Chrome()
     #driver = webdriver.Ie()
-    #driver = webdriver.Firefox()
+    driver = webdriver.Firefox()
     for csv_file in obtain_csv_files():
         print(csv_file)
         df_polylines_municipio = pd.read_csv(csv_dir+"/"+csv_file, sep=";", error_bad_lines=False, encoding="utf-8")
