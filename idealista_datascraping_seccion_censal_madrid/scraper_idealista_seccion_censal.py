@@ -73,7 +73,7 @@ def main():
 
             except:
                 print("error")
-                saltar_captcha(driver)
+                saltar_captcha(driver,cusec)
 
             url_alquiler = obtener_url_alquiler_csv(row)
             print("obteniendo datos de alquiler para municipio " + data["nmun"] +" en url:\n" + url_alquiler)
