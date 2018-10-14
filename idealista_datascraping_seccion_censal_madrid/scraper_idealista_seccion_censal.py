@@ -1,18 +1,83 @@
 from selenium import webdriver
 import time
 import random
+import pandas as pd
+import sys
+sys.getfilesystemencoding()
+sys._enablelegacywindowsfsencoding()
+
 polylines_csv_file = "encoded_polylines_madrid.csv"
 nmuns = ["Alcorcón"]
 
-def obtain_urls_from_csv():
-    return ["https://www.idealista.com/en/areas/venta-viviendas/?shape=((ywjvFjhbSRa%40LTnOdYtIzO%60Tf_%40p%5D~n%40bK%60RjPdZf%5Czl%40tCfFrFxJtBvDhOfXnBlE~%40dBjAxBnC%7CEnA~BjElHpCbFjGzKfDhGPZfAlBjBdD~BdEl%40pAhAnB%60GnKdAlBnItOx%40~A%5Er%40b%40%7C%40q%40r%40gAnAq%40%7C%40QVs%40pA_%40r%40Z%60%40_AnBcAlBk%40hAcAiAkAgA%5BuAo%40wCmCiLqCeLqCsIeBsFKQGMgAmCc%40iA%7DBiFGMqDoHKQ_AiBq%40kA_BgCsAaBwFoIuDuFeAuAmMoPuGaJcF%7BGy%40gAuJgMgFwGe%5D_e%40wbBizBcImKLONQaByBGIW%5D_CcDRYPY%40m%40d%40Cn%40I%60%40ILCr%40Ql%40Qn%40S%5CQ%5EUXW%5E%5D~EkGdDgEx%40cAiDiPnA%7DA))"]
+def obtain_csv_files():
+    return ["csv_polylines_municipios/Algete_polylines_2011_ccaa12.csv"]
+
+def obtener_url_venta_csv(row):
+    polyline_encoded = row["URLENCODED"]
+    inicio_url = "https://www.idealista.com/en/areas/venta-viviendas/?shape="
+    return inicio_url + polyline_encoded
+
+def obtener_url_alquiler_csv(row):
+    polyline_encoded = row["URLENCODED"]
+    inicio_url = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape="
+    return inicio_url + polyline_encoded
 
 def main():
     #driver = webdriver.Edge()
-    #driver = webdriver.Chrome()
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
+    #driver = webdriver.Ie()
+    #driver = webdriver.Firefox()
+    for csv_file in obtain_csv_files():
+        print(csv_file)
+        df_polylines_municipio = pd.read_csv(csv_file, sep=";", error_bad_lines=False, encoding="utf-8")
+        df_polylines_municipio["P_VENTA"] = ""
+        df_polylines_municipio["V_VENTA"] = ""
+        df_polylines_municipio["P_ALQL"] = ""
+        df_polylines_municipio["V_ALQL"] = ""
+        for index, row in df_polylines_municipio.iterrows():
+            url_venta = obtener_url_venta_csv(row)
+            print("obteniendo datos de venta " + url_venta)
+            try:
+                datos = obtener_precio_y_anuncios(driver,url_venta)
+                cusec = row["CUSEC"]
+                df_polylines_municipio.loc[index,"P_VENTA"]= datos["average_prize"]
+                df_polylines_municipio.loc[index,"V_VENTA"]= datos["number_of_items"]
+            except:
+                print("error")
 
-    urls = obtain_urls_from_csv()
+            url_alquiler = obtener_url_alquiler_csv(row)
+            print("obteniendo datos de alquiler " + url_alquiler)
+            try:
+                datos = obtener_precio_y_anuncios(driver,url_alquiler)
+                cusec = row["CUSEC"]
+                df_polylines_municipio.loc[index,"P_ALQL"]= datos["average_prize"]
+                df_polylines_municipio.loc[index,"V_ALQL"]= datos["number_of_items"]
+            except:
+                print("error")
+
+        dir_salida = "tmp"
+        nombre_subfichero_salida = csv_file.replace(".csv","").split("/")[1] + "_scraped.csv"
+        print("guardando " + nombre_subfichero_salida)
+        df_polylines_municipio.to_csv(dir_salida +"/" + nombre_subfichero_salida, sep=";", index=False)
+
+
+def obtener_precio_y_anuncios(driver,url):
+    resultado = {}
+    driver.get(url)
+    driver.set_page_load_timeout(20)
+    item_info_container = driver.find_elements_by_class_name("item-info-container")
+
+    random_int = 8573 + random.randint(-3, 3)
+    driver.execute_script("window.scrollTo(0, " + str(random_int) + ");")
+    time.sleep(random.uniform(0.5, 0.9))
+    average_prize = driver.find_elements_by_class_name("items-average-price")[0].text.replace("Average price:","").replace("eur/m²","").replace(",", "").strip()
+    print(average_prize)
+    number_of_items = driver.find_elements_by_class_name("h1-simulated")[0].text.split(" ")[0].strip()
+    print(number_of_items)
+
+    resultado["average_prize"] = average_prize
+    resultado["number_of_items"] = number_of_items
+    return resultado
 
 if __name__ == '__main__':
     main()
