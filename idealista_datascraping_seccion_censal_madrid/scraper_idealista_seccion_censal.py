@@ -1,7 +1,9 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 import time
 import random
 import pandas as pd
+from datetime import datetime
 import sys
 sys.getfilesystemencoding()
 sys._enablelegacywindowsfsencoding()
@@ -9,8 +11,9 @@ sys._enablelegacywindowsfsencoding()
 polylines_csv_file = "encoded_polylines_madrid.csv"
 nmuns = ["Alcorcón"]
 
+fecha_ejec = str(datetime.now())
 def obtain_csv_files():
-    return ["csv_polylines_municipios/Alcorcón_polylines_2011_ccaa12.csv"]
+    return ["csv_polylines_municipios/test_polylines_2011_ccaa12.csv"]
 
 def obtener_url_venta_csv(row):
     polyline_encoded = row["URLENCODED"]
@@ -25,8 +28,8 @@ def obtener_url_alquiler_csv(row):
 def main():
     #driver = webdriver.Edge()
     #driver = webdriver.Chrome()
-    driver = webdriver.Ie()
-    #driver = webdriver.Firefox()
+    #driver = webdriver.Ie()
+    driver = webdriver.Firefox()
     for csv_file in obtain_csv_files():
         print(csv_file)
         df_polylines_municipio = pd.read_csv(csv_file, sep=";", error_bad_lines=False, encoding="utf-8")
@@ -34,6 +37,8 @@ def main():
         df_polylines_municipio["V_VENTA"] = ""
         df_polylines_municipio["P_ALQL"] = ""
         df_polylines_municipio["V_ALQL"] = ""
+        df_polylines_municipio["FECHA"] = ""
+
         for index, row in df_polylines_municipio.iterrows():
             url_venta = obtener_url_venta_csv(row)
             print("obteniendo datos de venta " + url_venta)
@@ -42,11 +47,15 @@ def main():
                 cusec = row["CUSEC"]
                 df_polylines_municipio.loc[index,"P_VENTA"]= datos["average_prize"]
                 df_polylines_municipio.loc[index,"V_VENTA"]= datos["number_of_items"]
+                df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
+
             except:
                 print("error")
-                saltar_captcha(driver)
                 df_polylines_municipio.loc[index, "P_VENTA"] = 0
                 df_polylines_municipio.loc[index, "V_VENTA"] = 0
+                df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
+
+                saltar_captcha(driver)
 
             url_alquiler = obtener_url_alquiler_csv(row)
             print("obteniendo datos de alquiler " + url_alquiler)
@@ -55,13 +64,18 @@ def main():
                 cusec = row["CUSEC"]
                 df_polylines_municipio.loc[index,"P_ALQL"]= datos["average_prize"]
                 df_polylines_municipio.loc[index,"V_ALQL"]= datos["number_of_items"]
+                df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
             except:
                 print("error")
+                df_polylines_municipio.loc[index, "P_ALQL"] = 0
+                df_polylines_municipio.loc[index, "V_ALQL"] = 0
+                df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
                 saltar_captcha(driver)
 
         dir_salida = "tmp"
         nombre_subfichero_salida = csv_file.replace(".csv","").split("/")[1] + "_scraped.csv"
         print("guardando " + nombre_subfichero_salida)
+        df_polylines_municipio = df_polylines_municipio[["CUSEC","NMUN","P_VENTA","V_VENTA","P_ALQL","V_ALQL","FECHA"]]
         df_polylines_municipio.to_csv(dir_salida +"/" + nombre_subfichero_salida, sep=";", index=False)
 
 
@@ -86,11 +100,14 @@ def obtener_precio_y_anuncios(driver,url):
 
 def saltar_captcha(driver):
     try:
-        capcha_box = driver.find_element_by_xpath("li[contains(text(),'Your custom search area')]")
-    except:
+        capcha_box = driver.find_element_by_xpath("//p[contains(text(),'Vaya! parece que estamos recibiendo muchas peticiones tuyas')]")
         time.sleep(random.uniform(0.5, 0.9))
-        print("capcha saltado")
+        print("capcha ha saltado")
         time.sleep(random.uniform(2.5, 2.9))
+        raise Exception;
+    except NoSuchElementException:
+        pass
+
 
 
 
