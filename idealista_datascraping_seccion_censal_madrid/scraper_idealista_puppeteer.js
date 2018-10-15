@@ -15,7 +15,7 @@ const delay = require('delay');
     const date = new Date().toLocaleString().replace(/:/g, '_').replace(/ /g, '_').replace(/\//g, '_');
     console.log(date);
 
-    await files.forEach(async (csv_file) => {
+    for (csv_file of files){
         const lines = fs.readFileSync("./" + csv_dir + "/" + csv_file).toString().split("\n");
 
         const browser = await puppeteer.launch();
@@ -38,6 +38,7 @@ const delay = require('delay');
 
                 } catch (error) {
                     console.log("error");
+                    await detectCapcha(page);
                 }
 
                 const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + row.polyLine;
@@ -52,12 +53,13 @@ const delay = require('delay');
                 await delay(1000);
                 extractedData.push(data);
                 console.log(data);
+                detectCapcha(page);
             }
         }
         saveInCsv(extractedData);
 
         await browser.close();
-    });
+    }
 })();
 
 extractPrize = async (page, urlVenta) => {
@@ -81,15 +83,12 @@ extractParamsCsv = (line) => {
 
 saveInCsv = (extractedData) => {
     const header = "CUSEC;NMUN;V_VENTA;N_VENTA;V_ALQL;N_ALQL;FECHA\n"
-    const outputFilename = csv_file.replace(".csv", "_scraped.csv");
+    const outputFilename = "./tmp/" + csv_file.split("/")[1].replace(".csv", "_scraped.csv");
     fs.writeFileSync(outputFilename, header);
     for (let data of extractedData) {
         const newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
         fs.appendFileSync(outputFilename, newLine);
     }
-
-
-
 }
 
 //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -101,4 +100,18 @@ shuffleArray = (array) => {
         array[j] = temp;
     }
     return array;
+}
+
+detectCapcha = async (page) => {
+    let error;
+    try {
+        error = await page.$x("//p[contains(text(),'Vaya! parece que estamos recibiendo muchas peticiones tuyas')]");
+    } catch (error) {
+        console.log("no captcha");
+    }
+        if (error) {
+        console.log("___________________________________");
+        throw new Error("Capcha encontrado");
+    }
+    
 }
