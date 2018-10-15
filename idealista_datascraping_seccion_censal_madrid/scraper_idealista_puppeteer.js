@@ -21,18 +21,16 @@ Apify.main(async () => {
         const lines = fs.readFileSync("./" + csv_dir + "/" + csv_file).toString().split("\n");
 
         let extractedData = [];
+        const browser = await Apify.launchPuppeteer({
+            userAgent: randomUA.generate(),
+        });
+        const page = await browser.newPage();
 
         for (line of lines) {
             if (line.indexOf("NMUN", 1) === -1) {
-                const browser = await Apify.launchPuppeteer({
-                    userAgent: randomUA.generate(),
-                });
-                const page = await browser.newPage();
-
+                
                 // Or you can set user agent for specific page
                 //await page.setUserAgent(randomUA.get());
-                await Apify.utils.puppeteer.hideWebDriver(page);
-
                 await page.emulate(devices['iPhone 6']);
                 const row = extractParamsCsv(line);
 
@@ -64,11 +62,11 @@ Apify.main(async () => {
                 extractedData.push(data);
                 console.log(data);
                 detectCapcha(page);
-                await browser.close();
-
             }
         }
         saveInCsv(extractedData);
+
+        await browser.close();
     }
 });
 
