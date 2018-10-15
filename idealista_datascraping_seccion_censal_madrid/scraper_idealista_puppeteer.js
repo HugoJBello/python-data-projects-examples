@@ -2,13 +2,15 @@ const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const fs = require('fs');
 const delay = require('delay');
+const Apify = require('apify');
+const randomUA = require('modern-random-ua');
 
 
-
-(async () => {
+Apify.main(async () => {
 
     const csv_dir = "csv_polylines_municipios";
     const files = fs.readdirSync(csv_dir);
+    //files = ["./test_polylines_2011_ccaa12.csv"];
     //shuffleArray(files);
     console.log(files);
     //const csv_file = "./csv_polylines_municipios/test_polylines_2011_ccaa12.csv"
@@ -18,13 +20,20 @@ const delay = require('delay');
     for (csv_file of files){
         const lines = fs.readFileSync("./" + csv_dir + "/" + csv_file).toString().split("\n");
 
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.emulate(devices['iPhone 7']);
         let extractedData = [];
 
         for (line of lines) {
             if (line.indexOf("NMUN", 1) === -1) {
+                const browser = await Apify.launchPuppeteer({
+                    userAgent: randomUA.generate(),
+                });
+                const page = await browser.newPage();
+
+                // Or you can set user agent for specific page
+                //await page.setUserAgent(randomUA.get());
+                await Apify.utils.puppeteer.hideWebDriver(page);
+
+                await page.emulate(devices['iPhone 6']);
                 const row = extractParamsCsv(line);
 
                 const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + row.polyLine;
@@ -40,6 +49,7 @@ const delay = require('delay');
                     console.log("error");
                     await detectCapcha(page);
                 }
+                await page.waitFor(2000);
 
                 const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + row.polyLine;
                 try {
@@ -50,17 +60,17 @@ const delay = require('delay');
                 } catch (error) {
                     console.log("error");
                 }
-                await delay(1000);
+                await page.waitFor(2000);
                 extractedData.push(data);
                 console.log(data);
                 detectCapcha(page);
+                await browser.close();
+
             }
         }
         saveInCsv(extractedData);
-
-        await browser.close();
     }
-})();
+});
 
 extractPrize = async (page, urlVenta) => {
     await page.goto(urlVenta);
@@ -103,13 +113,16 @@ shuffleArray = (array) => {
 }
 
 detectCapcha = async (page) => {
-    let error;
+    let txt;
     try {
-        error = await page.$x("//p[contains(text(),'Vaya! parece que estamos recibiendo muchas peticiones tuyas')]");
+        error = await page.$(".g-recaptcha");
+        const text = await page.evaluate(element => element.textContent, error);
+        console.log(error);
     } catch (error) {
         console.log("no captcha");
     }
-        if (error) {
+        if (txt) {
+        console.log(txt);
         console.log("___________________________________");
         throw new Error("Capcha encontrado");
     }
