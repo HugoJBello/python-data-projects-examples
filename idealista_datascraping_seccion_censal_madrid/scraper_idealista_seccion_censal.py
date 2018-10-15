@@ -19,31 +19,16 @@ client = MongoClient('mongodb+srv://fresh:1234@cluster0-ojz1y.mongodb.net/real-s
 db =client['real-state-db']
 cusecs_idealista_collection = db.cusecs_idealista
 errores_cusecs_idealista_collection = db.errores_cusecs_idealista
+guardado_en_mongo = False
 
 fecha_ejec = str(datetime.now())
 csv_dir = "csv_polylines_municipios"
 
-def obtain_csv_files():
-    #return ["csv_polylines_municipios/test_polylines_2011_ccaa12.csv"]
-    files = os.listdir(csv_dir)
-    shuffle(files)
-    return files
-
-def obtener_url_venta_csv(row):
-    polyline_encoded = row["URLENCODED"]
-    inicio_url = "https://www.idealista.com/en/areas/venta-viviendas/?shape="
-    return inicio_url + polyline_encoded
-
-def obtener_url_alquiler_csv(row):
-    polyline_encoded = row["URLENCODED"]
-    inicio_url = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape="
-    return inicio_url + polyline_encoded
-
 def main():
-    #driver = webdriver.Edge()
+    driver = webdriver.Edge()
     #driver = webdriver.Chrome()
     #driver = webdriver.Ie()
-    driver = webdriver.Firefox()
+    #driver = webdriver.Firefox()
     for csv_file in obtain_csv_files():
         print(csv_file)
         df_polylines_municipio = pd.read_csv(csv_dir+"/"+csv_file, sep=";", error_bad_lines=False, encoding="utf-8")
@@ -67,8 +52,8 @@ def main():
             data["_id"] = str(df_polylines_municipio.loc[index,"CUSEC"]) + "--" + fecha_ejec.replace(":","__").replace(" ","_")
             print("obteniendo datos de venta para municipio " + data["nmun"] +" en url:\n" + url_venta)
             try:
-                datos_scraping = obtener_precio_y_anuncios(driver,url_venta)
                 cusec = row["CUSEC"]
+                datos_scraping = obtener_precio_y_anuncios(driver,url_venta)
                 df_polylines_municipio.loc[index,"P_VENTA"]= datos_scraping["average_prize"]
                 df_polylines_municipio.loc[index,"N_VENTA"]= datos_scraping["number_of_items"]
                 df_polylines_municipio.loc[index,"FECHA"]= fecha_ejec
@@ -95,7 +80,7 @@ def main():
                 print("error")
                 saltar_captcha(driver,cusec)
 
-            guardar_en_mongodb(data)
+            if (guardado_en_mongo): guardar_en_mongodb(data)
 
         dir_salida = "tmp"
         nombre_subfichero_salida = csv_file.replace(".csv","") + "_scraped.csv"
@@ -103,6 +88,21 @@ def main():
         df_polylines_municipio = df_polylines_municipio[["CUSEC","NMUN","P_VENTA","N_VENTA","P_ALQL","N_ALQL","FECHA"]]
         df_polylines_municipio.to_csv(dir_salida +"/" + nombre_subfichero_salida, sep=";", index=False)
 
+def obtain_csv_files():
+    #return ["csv_polylines_municipios/test_polylines_2011_ccaa12.csv"]
+    files = os.listdir(csv_dir)
+    shuffle(files)
+    return files
+
+def obtener_url_venta_csv(row):
+    polyline_encoded = row["URLENCODED"]
+    inicio_url = "https://www.idealista.com/en/areas/venta-viviendas/?shape="
+    return inicio_url + polyline_encoded
+
+def obtener_url_alquiler_csv(row):
+    polyline_encoded = row["URLENCODED"]
+    inicio_url = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape="
+    return inicio_url + polyline_encoded
 
 def obtener_precio_y_anuncios(driver,url):
     resultado = {}
@@ -128,8 +128,8 @@ def saltar_captcha(driver,cusec):
         time.sleep(random.uniform(0.5, 0.9))
         print("capcha ha saltado")
         time.sleep(random.uniform(2.5, 2.9))
-        registrar_error(cusec)
-        raise Exception;
+        if(guardar_en_mongo): registrar_error(cusec)
+        raise Exception
     except NoSuchElementException:
         pass
 

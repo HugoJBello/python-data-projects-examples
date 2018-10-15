@@ -12,6 +12,7 @@
     "@mapbox/polyline": "^1.0.0",
     "fs": "0.0.1-security",
     "geojson-polyline": "^1.0.2",
-    "google-polyline": "^1.0.0"
+    "google-polyline": "^1.0.0",
+    "puppeteer": "^1.9.0"
   }
 }

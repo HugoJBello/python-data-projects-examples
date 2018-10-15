@@ -7128,3 +7128,68 @@ pc_channel_win.cc, line 346
 1539559716255	Marionette	DEBUG	[6442450945] Received DOM event DOMContentLoaded for https://www.idealista.com/en/areas/venta-viviendas/?shape=((czguFb~eVdAqBz%40cBFFj%40j%40XVJLbAfA%60%40b%40l%40n%40FFhBhBDFA%40GNKCMDQZuAxCoBvD_B%60DYl%40ENg%40i%40iAiA%7DA_Be%40%5DkBqBhCaFjBuD))
 1539559716292	Marionette	DEBUG	[6442450945] Received observer notification outer-window-destroyed for 6442451585
 1539559716520	Marionette	DEBUG	[6442450945] Received DOM event pageshow for https://www.idealista.com/en/areas/venta-viviendas/?shape=((czguFb~eVdAqBz%40cBFFj%40j%40XVJLbAfA%60%40b%40l%40n%40FFhBhBDFA%40GNKCMDQZuAxCoBvD_B%60DYl%40ENg%40i%40iAiA%7DA_Be%40%5DkBqBhCaFjBuD))
+1539609762111	geckodriver	INFO	geckodriver 0.21.0
+1539609762133	geckodriver	INFO	Listening on 127.0.0.1:58926
+1539609762622	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\HJBG\\AppData\\Local\\Temp\\rust_mozprofile.AA610l4K9D3v"
+1539609764871	Marionette	INFO	Listening on port 58934
+1539609765354	Marionette	WARN	TLS certificate errors will be ignored for this session
+1539609765383	Marionette	DEBUG	[6442450945] Frame script loaded
+1539609765385	Marionette	DEBUG	[6442450945] Frame script registered
+1539609765409	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:blank
+1539609773883	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:blank
+1539609773885	Marionette	DEBUG	[6442450945] Received DOM event pagehide for about:blank
+1539609773922	Marionette	DEBUG	[6442450945] Received DOM event DOMContentLoaded for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/venta-viviendas/%3Fshape%3D%28%28%257DnouF%257C%7EmV%2540_ ... 40%257CAmOHU%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539610170429	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+1539610172548	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1539610172549	addons.xpi	ERROR	Failed to download system add-on gmp-widevinecdm: Error: Failed downloading via XHR, status: 0, reason: error (resource://gre/modules/addons/ProductAddonChecker.jsm:314:16) JS Stack trace: fail@ProductAddonChecker.jsm:314:16
+1539610174795	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1539610174795	addons.xpi	ERROR	Failed to download system add-on gmp-gmpopenh264: Error: Failed downloading via XHR, status: 0, reason: error (resource://gre/modules/addons/ProductAddonChecker.jsm:314:16) JS Stack trace: fail@ProductAddonChecker.jsm:314:16
+1539610174796	addons.manager	WARN	Failed to update system addons: Error: Rejecting updated system add-on set that either could not be downloaded or contained unusable add-ons. (resource://gre/modules/addons/XPIInstall.jsm:3645:13) JS Stack trace: updateSystemAddons@XPIInstall.jsm:3645:13
+1539610202359	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+1539610207597	addons.productaddons	WARN	Failed downloadi1539610209211	addons.productaddons	WAR1539610209704	addons.productaddons	WARN	Failed downl1539610210461	addons.productaddons	WARN	Fa[Parent 14416, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 14416, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 18192, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 18192, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 14416, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 4092, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1539612265438	Marionette	INFO	Stopped listening on port 58934
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+dons@XPIInstall.jsm:3645:13
+1539610214730	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1539610216979	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+[Parent 16516, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 16516, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 16432, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 16432, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 15532, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 16516, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1539612264473	Marionette	INFO	Stopped listening on port 59059
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+eas/venta-viviendas/%3Fshape%3D%28%28m%257D%7EtF%7EraT%253F%25 ... BhOGf%2540KN%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609868544	Marionette	DEBUG	[6442450945] Received DOM event DOMContentLoaded for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28m%257D%7EtF%7EraT%253F ... BhOGf%2540KN%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609868566	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28m%257D%7EtF%7EraT%253F ... BhOGf%2540KN%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609876980	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28m%257D%7EtF%7EraT%253F ... BhOGf%2540KN%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609876981	Marionette	DEBUG	[6442450945] Received DOM event pagehide for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28m%257D%7EtF%7EraT%253F ... BhOGf%2540KN%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609876982	Marionette	DEBUG	[6442450945] Received DOM event unload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28m%257D%7EtF%7EraT%253F ... BhOGf%2540KN%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609876999	Marionette	DEBUG	[6442450945] Received DOM event DOMContentLoaded for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/venta-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%255Ck ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609877024	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/venta-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%255Ck ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609889463	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/venta-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%255Ck ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609889464	Marionette	DEBUG	[6442450945] Received DOM event pagehide for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/venta-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%255Ck ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609889465	Marionette	DEBUG	[6442450945] Received DOM event unload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/venta-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%255Ck ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609889481	Marionette	DEBUG	[6442450945] Received DOM event DOMContentLoaded for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%25 ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609889496	Marionette	DEBUG	[6442450945] Received DOM event beforeunload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%25 ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609891780	Marionette	DEBUG	[6442450945] Received DOM event pagehide for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%25 ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609891781	Marionette	DEBUG	[6442450945] Received DOM event unload for about:neterror?e=netTimeout&u=https%3A//www.idealista.com/en/areas/alquiler-viviendas/%3Fshape%3D%28%28wb_uFfi_TdC%7EADVPI%25 ... 0uAXw%2540FS%29%29&c=UTF-8&f=regular&d=El%20servidor%20www.idealista.com%20est%C3%A1%20tardando%20demasiado%20en%20responder.
+1539609891782	Marionette	DEBUG	[6442450945] Received observer notification outer-window-destroyed for 6442450945
+[Child 660, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 7372, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 12572, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1539609892066	Marionette	INFO	Stopped listening on port 59202
+[GPU 9768, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
