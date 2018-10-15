@@ -1,53 +1,63 @@
-const url = "https://www.idealista.com/en/areas/venta-viviendas/?shape=((adhuFn~iVNb%40Pp%40%5EnAJd%40Nn%40%5BRYNYN%5EtA_Af%40g%40P%5BJBLTtAJj%40ZnBq%40Oo%40MOISKC%3FiAwHTURUXe%40Vc%40H%5Bn%40kApAaC))";
 const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors');
 const fs = require('fs');
+const delay = require('delay');
 
 
-const csv_file = "./csv_polylines_municipios/test_polylines_2011_ccaa12.csv"
-const lines = fs.readFileSync(csv_file).toString().split("\n");
-const date = new Date().toLocaleString().replace(/:/g, '_').replace(/ /g, '_').replace(/\//g, '_');
-console.log(date);
 
 (async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.emulate(devices['iPhone 6']);
-    let extractedData = [];
 
-    for (line of lines) {
-        if (line.indexOf("NMUN", 1) === -1) {
-            const row = extractParamsCsv(line);
+    const csv_dir = "csv_polylines_municipios";
+    const files = fs.readdirSync(csv_dir);
+    //shuffleArray(files);
+    console.log(files);
+    //const csv_file = "./csv_polylines_municipios/test_polylines_2011_ccaa12.csv"
+    const date = new Date().toLocaleString().replace(/:/g, '_').replace(/ /g, '_').replace(/\//g, '_');
+    console.log(date);
 
-            const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + row.polyLine;
-            console.log(urlVenta);
-            let data = { fecha: date, cusec: row.cusec, nmun: row.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
-            data["_id"] = row.cusec + "--" + date;
-            try {
-                const extractedVenta = await extractPrize(page, urlVenta);
-                data["v_venta"] = extractedVenta.averagePrize;
-                data["n_venta"] = extractedVenta.numberOfElements;
+    await files.forEach(async (csv_file) => {
+        const lines = fs.readFileSync("./" + csv_dir + "/" + csv_file).toString().split("\n");
 
-            } catch (error) {
-                console.log("error");
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.emulate(devices['iPhone 7']);
+        let extractedData = [];
+
+        for (line of lines) {
+            if (line.indexOf("NMUN", 1) === -1) {
+                const row = extractParamsCsv(line);
+
+                const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + row.polyLine;
+                console.log(urlVenta);
+                let data = { fecha: date, cusec: row.cusec, nmun: row.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
+                data["_id"] = row.cusec + "--" + date;
+                try {
+                    const extractedVenta = await extractPrize(page, urlVenta);
+                    data["v_venta"] = extractedVenta.averagePrize;
+                    data["n_venta"] = extractedVenta.numberOfElements;
+
+                } catch (error) {
+                    console.log("error");
+                }
+
+                const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + row.polyLine;
+                try {
+                    const extractedAlql = await extractPrize(page, urlAlql);
+                    data["v_alql"] = extractedAlql.averagePrize;
+                    data["n_alql"] = extractedAlql.numberOfElements;
+
+                } catch (error) {
+                    console.log("error");
+                }
+                await delay(1000);
+                extractedData.push(data);
+                console.log(data);
             }
-
-            const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + row.polyLine;
-            try {
-                const extractedAlql = await extractPrize(page, urlAlql);
-                data["v_alql"] = extractedAlql.averagePrize;
-                data["n_alql"] = extractedAlql.numberOfElements;
-
-            } catch (error) {
-                console.log("error");
-            }
-            extractedData.push(data);
-            console.log(data);
         }
-    }
-    saveInCsv(extractedData);
+        saveInCsv(extractedData);
 
-    await browser.close();
+        await browser.close();
+    });
 })();
 
 extractPrize = async (page, urlVenta) => {
@@ -60,7 +70,7 @@ extractPrize = async (page, urlVenta) => {
     const elementNumber = await page.$(".h1-simulated");
     const textNumber = await page.evaluate(element => element.textContent, elementNumber);
     numberOfElements = textNumber.replace(" ", "").trim()
-
+    
     return { averagePrize: averagePrize, numberOfElements: numberOfElements }
 }
 
@@ -80,4 +90,15 @@ saveInCsv = (extractedData) => {
 
 
 
+}
+
+//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+shuffleArray = (array) => {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }
