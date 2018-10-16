@@ -28,8 +28,11 @@ Apify.main(async () => {
             });
             const page = await browser.newPage();
 
-            for (let i = 0; i < cusecs.length; i++) {
+            let continueScraping = true;
+            let i = 0;
+            while (continueScraping) {
                 const cusec = cusecs[i];
+                const capchaFound = false;
                 if (!cusec.alreadyScraped) {
                     // Or you can set user agent for specific page
                     await page.setUserAgent(randomUA.generate());
@@ -47,7 +50,6 @@ Apify.main(async () => {
                     } catch (error) {
                         console.log("error");
                     }
-                    if (await detectCapcha(page)) throw Error();
                     await page.waitFor(10);
 
                     const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + cusec.urlEncoded;
@@ -62,7 +64,11 @@ Apify.main(async () => {
                     }
                     await page.waitFor(10);
                     console.log(data);
-                    if (await detectCapcha(page)) throw Error();
+                    capchaFound = await detectCapcha(page);
+                }
+                if (!capchaFound) {
+                    i = i++;
+                    continueScraping = (i < cusecs.length);
 
                     extractedData.push(data);
                     saveDataForMunicipio(extractedData, json_file);
@@ -123,6 +129,8 @@ detectCapcha = async (page) => {
         const pagetxt = await page.content();
         found = pagetxt.indexOf('Vaya! parece que estamos recibiendo muchas peticiones', 1) > -1;
         if (found) console.log("--------------------\n Captcha ha saltado!")
+        console.log("esperando...");
+        await page.waitFor(5000);
     } catch (error) {
         return false
     }
