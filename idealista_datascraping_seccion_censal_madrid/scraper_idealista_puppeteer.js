@@ -75,7 +75,7 @@ Apify.main(async () => {
                     extractedData.push(data);
                     saveDataForMunicipio(extractedData, json_file);
 
-                    municipio.cusecs[i].alreadyScraped = true;
+                    if(municipio.cusecs[i]) municipio.cusecs[i].alreadyScraped = true;
                     updateFileMunicipio(municipio, json_dir);
                 }
 
@@ -83,7 +83,7 @@ Apify.main(async () => {
 
             municipio.alreadyScraped = true;
             updateFileMunicipio(municipio, json_dir);
-            saveInCsv(extractedData);
+            //saveInCsv(extractedData);
 
             //await browser.close();
         }
