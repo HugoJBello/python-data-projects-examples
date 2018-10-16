@@ -29,11 +29,12 @@ Apify.main(async () => {
             const page = await browser.newPage();
 
             let continueScraping = true;
+            let data;
             let i = 0;
             while (continueScraping) {
                 console.log("scraping");
-                const cusec = cusecs[i];
-                const capchaFound = false;
+                let cusec = cusecs[i];
+                let capchaFound = false;
                 if (!cusec.alreadyScraped) {
                     // Or you can set user agent for specific page
                     await page.setUserAgent(randomUA.generate());
@@ -41,7 +42,7 @@ Apify.main(async () => {
 
                     const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + cusec.urlEncoded;
                     console.log("extrayendo datos de venta para " + municipio.fileName + " \n" + urlVenta);
-                    let data = { fecha: date, cusec: cusec.cusec, nmun: cusec.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
+                    data = { fecha: date, cusec: cusec.cusec, nmun: cusec.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
                     data["_id"] = cusec.cusec + "--" + date;
                     try {
                         const extractedVenta = await extractPrize(page, urlVenta);
@@ -129,9 +130,11 @@ detectCapcha = async (page) => {
     try {
         const pagetxt = await page.content();
         found = pagetxt.indexOf('Vaya! parece que estamos recibiendo muchas peticiones', 1) > -1;
-        if (found) console.log("--------------------\n Captcha ha saltado!")
-        console.log("esperando...");
-        await page.waitFor(5000);
+        if (found){
+            console.log("--------------------\n Captcha ha saltado!")
+            console.log("esperando...");
+            await page.waitFor(30000);
+        } 
     } catch (error) {
         return false
     }
