@@ -8,65 +8,77 @@ const randomUA = require('modern-random-ua');
 
 Apify.main(async () => {
 
-    const csv_dir = "csv_polylines_municipios";
-    const files = fs.readdirSync(csv_dir);
-    //files = ["./test_polylines_2011_ccaa12.csv"];
+    const json_dir = "json_polylines_municipios";
+    const files = fs.readdirSync(json_dir);
+    //files = ["./test_polylines_2011_ccaa12.json"];
     //shuffleArray(files);
     console.log(files);
     //const csv_file = "./csv_polylines_municipios/test_polylines_2011_ccaa12.csv"
     const date = new Date().toLocaleString().replace(/:/g, '_').replace(/ /g, '_').replace(/\//g, '_');
     console.log(date);
 
-    for (csv_file of files){
-        const lines = fs.readFileSync("./" + csv_dir + "/" + csv_file).toString().split("\n");
+    for (json_file of files) {
+        const municipio = require("./" + json_dir + "/" + json_file);
+        if (!municipio.municipioScraped) {
+            const cusecs = municipio.cusecs;
+            let extractedData = initializeDataForMunicipio(json_file);
+            const browser = await Apify.launchPuppeteer({
+                userAgent: randomUA.generate(),
+                headless: true
+            });
+            const page = await browser.newPage();
 
-        let extractedData = [];
-        const browser = await Apify.launchPuppeteer({
-            userAgent: randomUA.generate(),
-        });
-        const page = await browser.newPage();
+            for (let i = 0; i < cusecs.length; i++) {
+                const cusec = cusecs[i];
+                if (!cusec.alreadyScraped) {
+                    // Or you can set user agent for specific page
+                    await page.setUserAgent(randomUA.generate());
+                    await page.emulate(devices['iPhone 6']);
 
-        for (line of lines) {
-            if (line.indexOf("NMUN", 1) === -1) {
-                
-                // Or you can set user agent for specific page
-                //await page.setUserAgent(randomUA.get());
-                await page.emulate(devices['iPhone 6']);
-                const row = extractParamsCsv(line);
+                    const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + cusec.urlEncoded;
+                    console.log("extrayendo datos de venta para " + municipio.fileName + " \n" + urlVenta);
+                    let data = { fecha: date, cusec: cusec.cusec, nmun: cusec.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
+                    data["_id"] = cusec.cusec + "--" + date;
+                    try {
+                        const extractedVenta = await extractPrize(page, urlVenta);
+                        data["v_venta"] = extractedVenta.averagePrize;
+                        data["n_venta"] = extractedVenta.numberOfElements;
 
-                const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + row.polyLine;
-                console.log(urlVenta);
-                let data = { fecha: date, cusec: row.cusec, nmun: row.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
-                data["_id"] = row.cusec + "--" + date;
-                try {
-                    const extractedVenta = await extractPrize(page, urlVenta);
-                    data["v_venta"] = extractedVenta.averagePrize;
-                    data["n_venta"] = extractedVenta.numberOfElements;
+                    } catch (error) {
+                        console.log("error");
+                    }
+                    if (await detectCapcha(page)) throw Error();
+                    await page.waitFor(10);
 
-                } catch (error) {
-                    console.log("error");
-                    await detectCapcha(page);
+                    const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + cusec.urlEncoded;
+                    console.log("extrayendo datos de alquiler para " + municipio.fileName + " \n" + urlAlql);
+                    try {
+                        const extractedAlql = await extractPrize(page, urlAlql);
+                        data["v_alql"] = extractedAlql.averagePrize;
+                        data["n_alql"] = extractedAlql.numberOfElements;
+
+                    } catch (error) {
+                        console.log("error");
+                    }
+                    await page.waitFor(10);
+                    console.log(data);
+                    if (await detectCapcha(page)) throw Error();
+
+                    extractedData.push(data);
+                    saveDataForMunicipio(extractedData, json_file);
+
+                    municipio.cusecs[i].alreadyScraped = true;
+                    updateFileMunicipio(municipio, json_dir);
                 }
-                await page.waitFor(2000);
 
-                const urlAlql = "https://www.idealista.com/en/areas/alquiler-viviendas/?shape=" + row.polyLine;
-                try {
-                    const extractedAlql = await extractPrize(page, urlAlql);
-                    data["v_alql"] = extractedAlql.averagePrize;
-                    data["n_alql"] = extractedAlql.numberOfElements;
-
-                } catch (error) {
-                    console.log("error");
-                }
-                await page.waitFor(2000);
-                extractedData.push(data);
-                console.log(data);
-                detectCapcha(page);
             }
-        }
-        saveInCsv(extractedData);
 
-        await browser.close();
+            municipio.alreadyScraped = true;
+            updateFileMunicipio(municipio, json_dir);
+            saveInCsv(extractedData);
+
+            //await browser.close();
+        }
     }
 });
 
@@ -80,18 +92,13 @@ extractPrize = async (page, urlVenta) => {
     const elementNumber = await page.$(".h1-simulated");
     const textNumber = await page.evaluate(element => element.textContent, elementNumber);
     numberOfElements = textNumber.replace(" ", "").trim()
-    
-    return { averagePrize: averagePrize, numberOfElements: numberOfElements }
-}
 
-extractParamsCsv = (line) => {
-    splitLine = line.split(";");
-    return { cusec: splitLine[1], nmun: splitLine[2], polyLine: splitLine[5] }
+    return { averagePrize: averagePrize, numberOfElements: numberOfElements }
 }
 
 saveInCsv = (extractedData) => {
     const header = "CUSEC;NMUN;V_VENTA;N_VENTA;V_ALQL;N_ALQL;FECHA\n"
-    const outputFilename = "./tmp/" + csv_file.split("/")[1].replace(".csv", "_scraped.csv");
+    const outputFilename = "./tmp/" + json_file.split("/")[1].replace(".csv", "_scraped.csv");
     fs.writeFileSync(outputFilename, header);
     for (let data of extractedData) {
         const newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
@@ -111,18 +118,32 @@ shuffleArray = (array) => {
 }
 
 detectCapcha = async (page) => {
-    let txt;
+    let found;
     try {
-        error = await page.$(".g-recaptcha");
-        const text = await page.evaluate(element => element.textContent, error);
-        console.log(error);
+        const pagetxt = await page.content();
+        found = pagetxt.indexOf('Vaya! parece que estamos recibiendo muchas peticiones', 1) > -1;
+        if (found) console.log("--------------------\n Captcha ha saltado!")
     } catch (error) {
-        console.log("no captcha");
+        return false
     }
-        if (txt) {
-        console.log(txt);
-        console.log("___________________________________");
-        throw new Error("Capcha encontrado");
+    return found;
+}
+
+updateFileMunicipio = (municipio, json_dir) => {
+    const outputFilename = "./" + json_dir + "/" + municipio.fileName;
+    fs.writeFileSync(outputFilename, JSON.stringify(municipio));
+}
+
+initializeDataForMunicipio = (json_file) => {
+    let jsonDataFile = json_file.replace(".json", "_scraped.json");
+    if (fs.existsSync("tmp/" + jsonDataFile)) {
+        return require("./tmp/" + jsonDataFile);
     }
-    
+    return [];
+}
+
+saveDataForMunicipio = (data, json_file) => {
+    let jsonDataFile = json_file.replace(".json", "_scraped.json");
+    const outputFilename = "./tmp/" + jsonDataFile;
+    fs.writeFileSync(outputFilename, JSON.stringify(data));
 }
