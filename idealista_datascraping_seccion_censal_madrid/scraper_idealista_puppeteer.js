@@ -31,6 +31,7 @@ Apify.main(async () => {
             let continueScraping = true;
             let i = 0;
             while (continueScraping) {
+                console.log("scraping");
                 const cusec = cusecs[i];
                 const capchaFound = false;
                 if (!cusec.alreadyScraped) {
@@ -67,7 +68,7 @@ Apify.main(async () => {
                     capchaFound = await detectCapcha(page);
                 }
                 if (!capchaFound) {
-                    i = i++;
+                    i = i + 1;
                     continueScraping = (i < cusecs.length);
 
                     extractedData.push(data);
