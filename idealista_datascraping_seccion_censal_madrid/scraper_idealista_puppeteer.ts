@@ -8,8 +8,8 @@ const randomUA = require('modern-random-ua');
 export class ScrapperIdealistaPuppeteer {
     json_dir = "json_polylines_municipios";
     files = fs.readdirSync(this.json_dir);
-    timoutTimeSearches: number = 10;
-    timoutTimeCapchaDetected: number = 30 * 1000;
+    timoutTimeSearches: number = 1000;
+    timoutTimeCapchaDetected: number = 5 * 60 * 1000;
     date: string = "";
     browser: any;
     page: any;
@@ -49,14 +49,13 @@ export class ScrapperIdealistaPuppeteer {
                             capchaFound = await this.detectCapcha();
                         }
                         if (!capchaFound) {
-                            i = i + 1;
-                            continueScraping = (i < cusecs.length);
-
-                            extractedData.push(data);
+                            if (data) { extractedData.push(data); }
                             this.saveDataForMunicipio(extractedData, json_file);
 
                             if (municipio.cusecs[i]) municipio.cusecs[i].alreadyScraped = true;
                             this.updateFileMunicipio(municipio, this.json_dir);
+                            i = i + 1;
+                            continueScraping = (i < cusecs.length);
                         }
 
                     }
