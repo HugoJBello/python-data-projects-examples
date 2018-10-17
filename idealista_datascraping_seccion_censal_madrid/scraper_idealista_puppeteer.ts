@@ -31,10 +31,9 @@ export class ScrapperIdealistaPuppeteer {
             for (let json_file of this.files) {
                 const municipio = require("./" + this.json_dir + "/" + json_file);
                 if (!municipio._id) { municipio._id = this.sessionId; }
-
                 if (!municipio.municipioScraped) {
                     const cusecs = municipio.cusecs;
-                    let extractedData = this.initializeDataForMunicipio(json_file);
+                    let extractedData: ExtractedData = this.initializeDataForMunicipio(json_file);
 
                     await this.initalizePuppeteer();
 
@@ -56,7 +55,7 @@ export class ScrapperIdealistaPuppeteer {
                             capchaFound = await this.detectCapcha();
                         }
                         if (!capchaFound) {
-                            if (data) { extractedData.push(data); }
+                            if (data) { extractedData.scrapedData.push(data); }
                             this.saveDataForMunicipio(extractedData, json_file);
 
                             if (municipio.cusecs[i]) municipio.cusecs[i].alreadyScraped = true;
@@ -67,7 +66,7 @@ export class ScrapperIdealistaPuppeteer {
 
                     }
 
-                    municipio.alreadyScraped = true;
+                    municipio.municipioScraped = true;
                     this.updateFileMunicipio(municipio, this.json_dir);
                     this.saveInCsv(extractedData, json_file);
 
@@ -127,14 +126,18 @@ export class ScrapperIdealistaPuppeteer {
         return { averagePrize: averagePrize, numberOfElements: numberOfElements }
     }
 
-    saveInCsv = (extractedData: any, json_file: string) => {
+    saveInCsv = (extractedData: ExtractedData, json_file: string) => {
         if (json_file) {
             const header = "CUSEC;NMUN;V_VENTA;N_VENTA;V_ALQL;N_ALQL;FECHA\n"
             const outputFilename = "./tmp/" + json_file.replace(".json", "_scraped.csv");
             fs.writeFileSync(outputFilename, header);
-            for (let data of extractedData) {
-                const newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
-                fs.appendFileSync(outputFilename, newLine);
+            for (let data of extractedData.scrapedData) {
+                let newLine;
+                if (data.cusec) {
+                    newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
+                    fs.appendFileSync(outputFilename, newLine);
+
+                }
             }
         }
     }
@@ -162,13 +165,17 @@ export class ScrapperIdealistaPuppeteer {
         fs.writeFileSync(outputFilename, JSON.stringify(municipio));
     }
 
-    initializeDataForMunicipio = (json_file: any) => {
+    public initializeDataForMunicipio(json_file: any): ExtractedData {
         let jsonDataFile = json_file.replace(".json", "_scraped.json");
+        let nmun: string = json_file.split("_")[0];
         if (fs.existsSync("tmp/" + jsonDataFile)) {
-            return require("./tmp/" + jsonDataFile);
+            let data = require("./tmp/" + jsonDataFile);
+            if (!data._id) { data._id = nmun + "--" + this.sessionId; }
+            if (!data.nmun) { data.nmun = nmun; }
+            return data;
         }
-        const extractedData = { _id: this.sessionId, cusecs: [] };
-        return [];
+        const extractedData: ExtractedData = { _id: nmun + "--" + this.sessionId, sessionId: this.sessionId, nmun: nmun, scrapedData: [] };
+        return extractedData;
     }
 
     saveDataForMunicipio = (data: any, json_file: any) => {
@@ -178,5 +185,26 @@ export class ScrapperIdealistaPuppeteer {
     }
 }
 
+
+export interface ExtractedData {
+    _id: string;
+    sessionId: string;
+    nmun: string;
+    scrapedData: CusecData[];
+}
+
+export interface CusecData {
+    fecha: string;
+    cusec: number,
+    nmun: string,
+    v_venta: number,
+    n_venta: number,
+    v_alql: number,
+    n_alql: number,
+    _id: string
+}
+
+
+//------------------MAIN PROGRAM-------------------------
 const scraper = new ScrapperIdealistaPuppeteer();
 scraper.main();
