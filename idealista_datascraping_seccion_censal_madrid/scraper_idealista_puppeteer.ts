@@ -4,7 +4,6 @@ const fs = require('fs');
 const delay = require('delay');
 const Apify = require('apify');
 const randomUA = require('modern-random-ua');
-const convertCsvRawFilesToJson = require("./ConvertCsvRawFilesToJson");
 import { ConvertCsvRawFilesToJson } from './ConvertCsvRawFilesToJson'
 
 export class ScrapperIdealistaPuppeteer {
@@ -16,6 +15,8 @@ export class ScrapperIdealistaPuppeteer {
     timoutTimeCapchaDetected: number = 5 * 60 * 1000;
     sessionId: string = this.config.sessionId;
     convertCsvRawFilesToJson: ConvertCsvRawFilesToJson = new ConvertCsvRawFilesToJson();
+    MongoClient = require('mongodb').MongoClient;
+
     date: string = "";
     browser: any;
     page: any;
@@ -84,6 +85,7 @@ export class ScrapperIdealistaPuppeteer {
                     }
 
                     municipio.municipioScraped = true;
+                    if (this.config.useMongoDb){await this.insertExtractedDataMongo(extractedData);}
                     this.updateFileMunicipio(municipio, this.json_dir);
                     this.saveInCsv(extractedData, json_file);
 
@@ -204,6 +206,17 @@ export class ScrapperIdealistaPuppeteer {
         }
         const outputFilename = "./" + this.outputTempDir + jsonDataFile;
         fs.writeFileSync(outputFilename, JSON.stringify(data));
+    }
+
+    async insertExtractedDataMongo(extractedData:ExtractedData){
+        await this.MongoClient.connect(this.config.mongoUrl, function(err:any, client:any) {
+            const db = "realstate-db";
+            const collectionName = "summaries";
+            console.log("saving data in mongodb");
+            const collection = client.db(db).collection(collectionName);
+            collection.save(extractedData);
+            client.close();
+         });
     }
 }
 
