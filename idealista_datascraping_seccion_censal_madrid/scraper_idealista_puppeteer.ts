@@ -108,12 +108,12 @@ export class ScrapperIdealistaPuppeteer {
     async extractDataAlquilerVenta(municipio: any, cusec: any) {
         const urlVenta = "https://www.idealista.com/en/areas/venta-viviendas/?shape=" + cusec.urlEncoded;
         console.log("extrayendo datos de venta para " + municipio.fileName + " \n" + urlVenta);
-        let data: any = { fecha: this.date, cusec: cusec.cusec, nmun: cusec.nmun, v_venta: 0, n_venta: 0, v_alql: 0, n_alql: 0 };
+        let data: any = { fecha: this.date, cusec: cusec.cusec, nmun: cusec.nmun, precio_medio_venta: 0, numero_anuncios_venta: 0, precio_medio_alquiler: 0, numero_anuncios_alquiler: 0 };
         data["_id"] = cusec.cusec + "--" + this.date;
         try {
             const extractedVenta = await this.extractPrize(urlVenta);
-            data["v_venta"] = extractedVenta.averagePrize;
-            data["n_venta"] = extractedVenta.numberOfElements;
+            data["precio_medio_venta"] = extractedVenta.averagePrize;
+            data["numero_anuncios_venta"] = extractedVenta.numberOfElements;
 
         } catch (error) {
             console.log("error");
@@ -124,8 +124,8 @@ export class ScrapperIdealistaPuppeteer {
         console.log("extrayendo datos de alquiler para " + municipio.fileName + " \n" + urlAlql);
         try {
             const extractedAlql = await this.extractPrize(urlAlql);
-            data["v_alql"] = extractedAlql.averagePrize;
-            data["n_alql"] = extractedAlql.numberOfElements;
+            data["precio_medio_alquiler"] = extractedAlql.averagePrize;
+            data["numero_anuncios_alquiler"] = extractedAlql.numberOfElements;
 
         } catch (error) {
             console.log("error");
@@ -155,7 +155,7 @@ export class ScrapperIdealistaPuppeteer {
             for (let data of extractedData.scrapedData) {
                 let newLine;
                 if (data.cusec) {
-                    newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
+                    newLine = data.cusec + ";" + data.nmun + ";" + data.precio_medio_venta + ";" + data.numero_anuncios_venta + ";" + data.precio_medio_alquiler + ";" + data.numero_anuncios_alquiler + ";" + data.fecha + "\n";
                     fs.appendFileSync(outputFilename, newLine);
 
                 }
@@ -232,10 +232,10 @@ export interface CusecData {
     fecha: string;
     cusec: number,
     nmun: string,
-    v_venta: number,
-    n_venta: number,
-    v_alql: number,
-    n_alql: number,
+    precio_medio_venta: number,
+    numero_anuncios_venta: number,
+    precio_medio_alquiler: number,
+    numero_anuncios_alquiler: number,
     _id: string
 }
 
