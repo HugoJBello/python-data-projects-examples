@@ -10,9 +10,14 @@ export class ScrapperIdealistaPuppeteer {
     files = fs.readdirSync(this.json_dir);
     timoutTimeSearches: number = 1000;
     timoutTimeCapchaDetected: number = 5 * 60 * 1000;
+    sessionId: string = "initial_2018-10-17_12_18_18";
     date: string = "";
     browser: any;
     page: any;
+
+    public setSessionId() {
+        //
+    }
 
     public main() {
         Apify.main(async () => {
@@ -25,6 +30,8 @@ export class ScrapperIdealistaPuppeteer {
 
             for (let json_file of this.files) {
                 const municipio = require("./" + this.json_dir + "/" + json_file);
+                if (!municipio._id) { municipio._id = this.sessionId; }
+
                 if (!municipio.municipioScraped) {
                     const cusecs = municipio.cusecs;
                     let extractedData = this.initializeDataForMunicipio(json_file);
@@ -62,7 +69,7 @@ export class ScrapperIdealistaPuppeteer {
 
                     municipio.alreadyScraped = true;
                     this.updateFileMunicipio(municipio, this.json_dir);
-                    //saveInCsv(extractedData);
+                    this.saveInCsv(extractedData, json_file);
 
                     //await browser.close();
                 }
@@ -121,12 +128,14 @@ export class ScrapperIdealistaPuppeteer {
     }
 
     saveInCsv = (extractedData: any, json_file: string) => {
-        const header = "CUSEC;NMUN;V_VENTA;N_VENTA;V_ALQL;N_ALQL;FECHA\n"
-        const outputFilename = "./tmp/" + json_file.split("/")[1].replace(".csv", "_scraped.csv");
-        fs.writeFileSync(outputFilename, header);
-        for (let data of extractedData) {
-            const newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
-            fs.appendFileSync(outputFilename, newLine);
+        if (json_file) {
+            const header = "CUSEC;NMUN;V_VENTA;N_VENTA;V_ALQL;N_ALQL;FECHA\n"
+            const outputFilename = "./tmp/" + json_file.replace(".json", "_scraped.csv");
+            fs.writeFileSync(outputFilename, header);
+            for (let data of extractedData) {
+                const newLine = data.cusec + ";" + data.nmun + ";" + data.v_venta + ";" + data.n_venta + ";" + data.v_alql + ";" + data.n_alql + ";" + data.fecha + "\n";
+                fs.appendFileSync(outputFilename, newLine);
+            }
         }
     }
 
@@ -138,8 +147,9 @@ export class ScrapperIdealistaPuppeteer {
             if (found) {
                 console.log("--------------------\n Captcha ha saltado!")
                 console.log("esperando...");
-                this.initalizePuppeteer();
                 await this.page.waitFor(this.timoutTimeCapchaDetected);
+                await this.initalizePuppeteer();
+
             }
         } catch (error) {
             return false
@@ -157,6 +167,7 @@ export class ScrapperIdealistaPuppeteer {
         if (fs.existsSync("tmp/" + jsonDataFile)) {
             return require("./tmp/" + jsonDataFile);
         }
+        const extractedData = { _id: this.sessionId, cusecs: [] };
         return [];
     }
 
