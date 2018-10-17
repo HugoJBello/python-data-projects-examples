@@ -4,28 +4,45 @@ const fs = require('fs');
 const delay = require('delay');
 const Apify = require('apify');
 const randomUA = require('modern-random-ua');
+const convertCsvRawFilesToJson = require("./ConvertCsvRawFilesToJson");
+import { ConvertCsvRawFilesToJson } from './ConvertCsvRawFilesToJson'
 
 export class ScrapperIdealistaPuppeteer {
     json_dir = "json_polylines_municipios";
+    outputTempDir = "tmp/";
+    config = require("./scraping_config.json");
     files = fs.readdirSync(this.json_dir);
     timoutTimeSearches: number = 1000;
     timoutTimeCapchaDetected: number = 5 * 60 * 1000;
-    sessionId: string = "initial_2018-10-17_12_18_18";
+    sessionId: string = this.config.sessionId;
+    convertCsvRawFilesToJson: ConvertCsvRawFilesToJson = new ConvertCsvRawFilesToJson();
     date: string = "";
     browser: any;
     page: any;
 
-    public setSessionId() {
-        //
+    public async finalizeSession() {
+        this.sessionId = "scraping" + "----" + this.date;
+        this.config.sessionId = this.sessionId;
+        fs.writeFileSync('scraping_config.json', JSON.stringify(this.config));
+        await this.convertCsvRawFilesToJson.convert();
+    }
+
+    public initializeSession() {
+        this.date = new Date().toLocaleString().replace(/:/g, '_').replace(/ /g, '_').replace(/\//g, '_');
+        this.outputTempDir = this.outputTempDir + this.sessionId + "/";
+        this.sessionId = this.config.sessionId;
+        console.log("\n-------------------------------------------------------");
+        console.log(this.sessionId);
+        console.log("\n-------------------------------------------------------");
+
     }
 
     public main() {
         Apify.main(async () => {
+            this.initializeSession();
             //files = ["./test_polylines_2011_ccaa12.json"];
-            //shuffleArray(files);
             console.log(this.files);
             //const csv_file = "./csv_polylines_municipios/test_polylines_2011_ccaa12.csv"
-            this.date = new Date().toLocaleString().replace(/:/g, '_').replace(/ /g, '_').replace(/\//g, '_');
             console.log(this.date);
 
             for (let json_file of this.files) {
@@ -73,6 +90,8 @@ export class ScrapperIdealistaPuppeteer {
                     //await browser.close();
                 }
             }
+
+            await this.finalizeSession();
         });
     }
 
@@ -129,7 +148,7 @@ export class ScrapperIdealistaPuppeteer {
     saveInCsv = (extractedData: ExtractedData, json_file: string) => {
         if (json_file) {
             const header = "CUSEC;NMUN;V_VENTA;N_VENTA;V_ALQL;N_ALQL;FECHA\n"
-            const outputFilename = "./tmp/" + json_file.replace(".json", "_scraped.csv");
+            const outputFilename = "./" + this.outputTempDir + json_file.replace(".json", "_scraped.csv");
             fs.writeFileSync(outputFilename, header);
             for (let data of extractedData.scrapedData) {
                 let newLine;
@@ -168,9 +187,9 @@ export class ScrapperIdealistaPuppeteer {
     public initializeDataForMunicipio(json_file: any): ExtractedData {
         let jsonDataFile = json_file.replace(".json", "_scraped.json");
         let nmun: string = json_file.split("_")[0];
-        if (fs.existsSync("tmp/" + jsonDataFile)) {
-            let data = require("./tmp/" + jsonDataFile);
-            if (!data._id) { data._id = nmun + "--" + this.sessionId; }
+        if (fs.existsSync(this.outputTempDir + " /" + jsonDataFile)) {
+            let data = require("./" + this.outputTempDir + jsonDataFile);
+            data._id = nmun + "--" + this.sessionId
             if (!data.nmun) { data.nmun = nmun; }
             return data;
         }
@@ -180,7 +199,10 @@ export class ScrapperIdealistaPuppeteer {
 
     saveDataForMunicipio = (data: any, json_file: any) => {
         let jsonDataFile = json_file.replace(".json", "_scraped.json");
-        const outputFilename = "./tmp/" + jsonDataFile;
+        if (!fs.existsSync(this.outputTempDir)) {
+            fs.mkdirSync(this.outputTempDir);
+        }
+        const outputFilename = "./" + this.outputTempDir + jsonDataFile;
         fs.writeFileSync(outputFilename, JSON.stringify(data));
     }
 }
