@@ -7,7 +7,7 @@
     <orderEntry type="library" name="R User Library" level="project" />
     <orderEntry type="library" name="R Skeletons" level="application" />
     <orderEntry type="module" module-name="python-datascraping-fotocasa-idealista" />
-    <orderEntry type="module" module-name="extract_points_from_feature" />
+    <orderEntry type="module" module-name="datascraping-cusecs-madrid" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
