@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/analisi_demografico_seccion_censal.iml" filepath="$PROJECT_DIR$/.idea/analisi_demografico_seccion_censal.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/.idea/datascraping-cusecs-madrid.iml" filepath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/.idea/datascraping-cusecs-madrid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../django-run-task-eb/django_run_tast_eb/.idea/django_run_tast_eb.iml" filepath="$PROJECT_DIR$/../../django-run-task-eb/django_run_tast_eb/.idea/django_run_tast_eb.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../python-datascraping-fotocasa-idealista/.idea/python-datascraping-fotocasa-idealista.iml" filepath="$PROJECT_DIR$/../../python-datascraping-fotocasa-idealista/.idea/python-datascraping-fotocasa-idealista.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../twitter-mining-examples/.idea/twitter-mining-examples.iml" filepath="$PROJECT_DIR$/../../twitter-mining-examples/.idea/twitter-mining-examples.iml" />
     </modules>
   </component>
 </project>

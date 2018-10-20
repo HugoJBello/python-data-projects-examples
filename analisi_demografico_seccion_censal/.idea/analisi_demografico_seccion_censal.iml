@@ -8,6 +8,8 @@
     <orderEntry type="library" name="R Skeletons" level="application" />
     <orderEntry type="module" module-name="python-datascraping-fotocasa-idealista" />
     <orderEntry type="module" module-name="datascraping-cusecs-madrid" />
+    <orderEntry type="module" module-name="twitter-mining-examples" />
+    <orderEntry type="module" module-name="django_run_tast_eb" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
