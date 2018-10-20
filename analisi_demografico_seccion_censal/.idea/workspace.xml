@@ -7,6 +7,7 @@
       <change afterPath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/data/SECC_CPV_E_20111101_01_R_INE_MADRID.prj" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/data/SECC_CPV_E_20111101_01_R_INE_MADRID.shp" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/data/SECC_CPV_E_20111101_01_R_INE_MADRID.shx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/separar_datos_padron_por_municipio.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/initial_2018-10-17_12_18_18/Alcalá de Henares_polylines_2011_ccaa12_scraped.json" beforeDir="false" />
@@ -16,9 +17,68 @@
       <change beforePath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/initial_2018-10-17_12_18_18/test2_polylines_2012_ccaa12_scraped.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/initial_2018-10-17_12_18_18/test_polylines_2011_ccaa12_scraped.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/initial_2018-10-17_12_18_18/test_polylines_2011_ccaa12_scraped.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/analisi_demografico_seccion_censal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/analisi_demografico_seccion_censal.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crear_mapa_indicadores.py" beforeDir="false" afterPath="$PROJECT_DIR$/crear_mapa_indicadores.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/ConvertCsvRawFilesToJson.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/csv_polylines_municipios/test_polylines_2011_ccaa12.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/encoded_polylines_madrid.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/example.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/extract_points_from_features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Alcalá de Henares_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Alcobendas_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Alcorcón_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Algete_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Aranjuez_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Arganda del Rey_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Arroyomolinos_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Boadilla del Monte_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Ciempozuelos_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Collado Villalba_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Colmenar Viejo_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Coslada_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Fuenlabrada_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Galapagar_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Getafe_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Las Rozas de Madrid_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Leganés_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Madrid_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Majadahonda_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Mejorada del Campo_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Móstoles_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Navalcarnero_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Paracuellos de Jarama_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Parla_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Pinto_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Pozuelo de Alarcón_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Rivas-Vaciamadrid_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/San Fernando de Henares_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/San Sebastián de los Reyes_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Torrejón de Ardoz_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Torrelodones_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Tres Cantos_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Valdemoro_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/Villaviciosa de Odón_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/aaaaaaaaaaaaaaaaaaaaaatest_polylines_2011_ccaa12_scraped.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/aaaaaaaatest2_polylines_2012_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/test2_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/test_polylines_2011_ccaa12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/json_polylines_municipios/test_polylines_2011_ccaa12_scraped.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/obtain_encoded_polylines_from_geojson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/old/20181017.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/old/run_scraper.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/old/scraper_idealista_puppeteer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/old/test_polylines_2011_ccaa12.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/run_scraper.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/scraper_idealista_puppeteer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/scraper_idealista_puppeteer.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/scraper_idealista_seccion_censal.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/scraping_config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/separar_csv_polylines_por_municipio.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/separar_json_polylines_por_municipio.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/tsconfig.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../python-datascraping-fotocasa-idealista/tests/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../python-datascraping-fotocasa-idealista/tests/geckodriver.log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,6 +90,8 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$separar_csv_polylines_por_municipio.coverage" NAME="separar_csv_polylines_por_municipio Coverage Results" MODIFIED="1539532101532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid" />
     <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$extract_layer_geojson_fiona.coverage" NAME="extract_layer_geojson_fiona Coverage Results" MODIFIED="1539432980993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../extract_points_from_feature" />
+    <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$separar_datos_padron_por_municipio.coverage" NAME="separar_datos_padron_por_municipio Coverage Results" MODIFIED="1540025016937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$crear_mapa_indicadores.coverage" NAME="crear_mapa_indicadores Coverage Results" MODIFIED="1540025292924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$crear_mapa_precio_suelo.coverage" NAME="crear_mapa_precio_suelo Coverage Results" MODIFIED="1539971139058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../datascraping-cusecs-madrid" />
     <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$scraper_idealista_seccion_censal.coverage" NAME="scraper_idealista_seccion_censal Coverage Results" MODIFIED="1539559315290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid" />
     <SUITE FILE_PATH="coverage/analisi_demografico_seccion_censal$extract_points_from_features.coverage" NAME="extract_points_from_features Coverage Results" MODIFIED="1539464374553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../extract_points_from_feature" />
@@ -40,23 +102,24 @@
         <counts>
           <entry key="project.closed" value="3" />
           <entry key="project.open.time.25" value="1" />
+          <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.51" value="1" />
           <entry key="project.open.time.71" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="crs" value="2" />
-          <entry key="csv" value="16" />
+          <entry key="csv" value="20" />
           <entry key="geojson" value="1" />
           <entry key="gitignore" value="1" />
           <entry key="json" value="2" />
           <entry key="log" value="1" />
-          <entry key="py" value="24" />
+          <entry key="py" value="27" />
           <entry key="sh" value="1" />
           <entry key="txt" value="1" />
         </counts>
@@ -64,22 +127,22 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="2" />
-          <entry key="PLAIN_TEXT" value="23" />
-          <entry key="Python" value="24" />
+          <entry key="PLAIN_TEXT" value="27" />
+          <entry key="Python" value="27" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="csv" value="3" />
+          <entry key="csv" value="8" />
           <entry key="gitignore" value="12" />
-          <entry key="py" value="4002" />
+          <entry key="py" value="4187" />
           <entry key="txt" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="23" />
-          <entry key="Python" value="4002" />
+          <entry key="PLAIN_TEXT" value="28" />
+          <entry key="Python" value="4187" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -91,33 +154,60 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crear_mapa_indicadores.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-182">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/crear_mapa_precio_suelo.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+            <state relative-caret-position="952">
+              <caret line="60" column="40" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/.gitignore">
+        <entry file="file://$PROJECT_DIR$/tmp/Boadilla del Monte_datos_padron_edad_20181018.csv">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extraer_indicadores_demograficos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+            <state relative-caret-position="374">
+              <caret line="62" column="87" selection-start-line="62" selection-start-column="67" selection-end-line="62" selection-end-column="87" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/scraping----2018-10-18_17_51_31/aaatest_polylines_2012_ccaa12_scraped.csv">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/separar_datos_padron_por_municipio.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="79">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tmp/Alcalá de Henares_datos_padron_edad_20181018.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/crear_mapa_pob_migrante.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-190">
+              <caret line="26" column="49" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/output_padron_181018.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="78" selection-start-line="7" selection-start-column="78" selection-end-line="7" selection-end-column="78" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -134,14 +224,16 @@
       <find>;</find>
       <find>date</find>
       <find>V_ALQL</find>
+      <find>,</find>
     </findStrings>
     <replaceStrings>
       <replace>N_VENTA</replace>
       <replace>N_ALQL</replace>
+      <replace>.</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../datascraping-cusecs-madrid" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -160,6 +252,9 @@
         <option value="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/scraper_idealista_seccion_censal.py" />
         <option value="$PROJECT_DIR$/../../datascraping-cusecs-madrid/crear_mapa_precio_suelo.py" />
         <option value="$PROJECT_DIR$/../../datascraping-cusecs-madrid/.gitignore" />
+        <option value="$PROJECT_DIR$/data/output_padron_181018.csv" />
+        <option value="$PROJECT_DIR$/separar_datos_padron_por_municipio.py" />
+        <option value="$PROJECT_DIR$/crear_mapa_indicadores.py" />
       </list>
     </option>
   </component>
@@ -169,9 +264,12 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/../../datascraping-cusecs-madrid/node_modules" />
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
-      <path value="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/package.json" />
+      <path value="$PROJECT_DIR$/../../datascraping-cusecs-madrid/package.json" />
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
@@ -188,6 +286,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -197,13 +296,17 @@
             </path>
             <path>
               <item name="analisi_demografico_seccion_censal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="analisi_demografico_seccion_censal" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="analisi_demografico_seccion_censal" type="b2602c69:ProjectViewProjectNode" />
               <item name="datascraping-cusecs-madrid" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -212,12 +315,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\hugo_documentos\repos_github\python-data-projects-examples\analisi_demografico_seccion_censal\data" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\hugo_documentos\repos_github\python-data-projects-examples\analisi_demografico_seccion_censal" />
+      <recent name="C:\hugo_documentos\repos_github\python-data-projects-examples\analisi_demografico_seccion_censal\data" />
       <recent name="C:\hugo_documentos\repos_github\datascraping-cusecs-madrid" />
       <recent name="C:\hugo_documentos\repos_github\datascraping-cusecs-madrid\data" />
       <recent name="C:\hugo_documentos\repos_github\python-data-projects-examples\idealista_datascraping_seccion_censal_madrid" />
-      <recent name="C:\hugo_documentos\repos_github\python-data-projects-examples\idealista_datascraping_seccion_censal_madrid\csv_polylines_municipios" />
-      <recent name="C:\hugo_documentos\repos_github\python-data-projects-examples\extract_points_from_feature\data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -232,7 +338,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.crear_mapa_precio_suelo">
+  <component name="RunManager" selected="Python.crear_mapa_indicadores">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <module name="extract_points_from_feature" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -301,7 +407,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="crear_mapa_pob_migrante" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="crear_mapa_indicadores" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="analisi_demografico_seccion_censal" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -314,7 +420,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/crear_mapa_pob_migrante.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/crear_mapa_indicadores.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -337,28 +443,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../datascraping-cusecs-madrid/crear_mapa_precio_suelo.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="obtener_datos_poblacion_migrante_cusec" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="analisi_demografico_seccion_censal" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/obtener_datos_poblacion_migrante_cusec.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -403,6 +487,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/separar_csv_polylines_por_municipio.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="separar_datos_padron_por_municipio" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="analisi_demografico_seccion_censal" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/separar_datos_padron_por_municipio.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -518,19 +624,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.obtener_datos_poblacion_migrante_cusec" />
-      <item itemvalue="Python.crear_mapa_pob_migrante" />
       <item itemvalue="Python.scraper_idealista_seccion_censal" />
       <item itemvalue="Python.separar_csv_polylines_por_municipio" />
       <item itemvalue="Python.crear_mapa_precio_suelo" />
+      <item itemvalue="Python.separar_datos_padron_por_municipio" />
+      <item itemvalue="Python.crear_mapa_indicadores" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.crear_mapa_indicadores" />
+        <item itemvalue="Python.separar_datos_padron_por_municipio" />
         <item itemvalue="Python.crear_mapa_precio_suelo" />
         <item itemvalue="Python.scraper_idealista_seccion_censal" />
         <item itemvalue="Python.separar_csv_polylines_por_municipio" />
-        <item itemvalue="Python.crear_mapa_pob_migrante" />
-        <item itemvalue="Python.obtener_datos_poblacion_migrante_cusec" />
       </list>
     </recent_temporary>
   </component>
@@ -549,19 +655,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.34039333" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.34568834" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.31311476" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31311476" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.26065573" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.26065573" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="10" />
@@ -576,6 +681,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.csv" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -616,13 +724,6 @@
     <entry file="file://$PROJECT_DIR$/proceso_completo_pandas_gen_2016.py" />
     <entry file="file://$PROJECT_DIR$/../extract_points_from_feature/data/SECC_CPV_E_20111101_01_R_INE_MADRID_cs_epsg.geojson" />
     <entry file="file://$PROJECT_DIR$/../extract_points_from_feature/geoJSON_output/2800501002__2011_ine_geojson.json" />
-    <entry file="file://$PROJECT_DIR$/crear_mapa_pob_migrante.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="26" column="49" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../extract_points_from_feature/my_layer.json" />
     <entry file="file://$PROJECT_DIR$/../extract_points_from_feature/my_layer.crs" />
     <entry file="file://$PROJECT_DIR$/../extract_points_from_feature/extract_points_from_features.py" />
@@ -648,11 +749,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/geckodriver.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-208" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/geckodriver.log" />
     <entry file="file://$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/csv_polylines_municipios/Pinto_polylines_2011_ccaa12.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -706,13 +803,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extraer_indicadores_demograficos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="62" column="87" selection-start-line="62" selection-start-column="67" selection-end-line="62" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../python-datascraping-fotocasa-idealista/scraper/scraper_selenium_idealista.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
@@ -727,10 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <marker date="1539636387644" expanded="true" signature="5818:6111" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -741,9 +827,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/tmp/test_polylines_2011_ccaa12_scraped.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../idealista_datascraping_seccion_censal_madrid/tmp/test_polylines_2011_ccaa12_scraped.csv" />
     <entry file="file://$PROJECT_DIR$/../../python-datascraping-fotocasa-idealista/dto/summary_scrapped_dto.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -751,9 +835,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="20" selection-start-line="9" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -761,9 +842,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="97" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="97" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -791,18 +869,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crear_mapa_indicadores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-182">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/initial_2018-10-17_12_18_18/test_polylines_2011_ccaa12_scraped.csv" />
     <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/scraping----2018-10-18_17_51_31/aaatest_polylines_2012_ccaa12_scraped.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/tmp/initial_2018-10-17_12_18_18/test_polylines_2011_ccaa12_scraped.csv">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/crear_mapa_precio_suelo.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -811,12 +887,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../datascraping-cusecs-madrid/.gitignore">
+    <entry file="file://$PROJECT_DIR$/data/output_padron_181018.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        <state relative-caret-position="119">
+          <caret line="7" column="78" selection-start-line="7" selection-start-column="78" selection-end-line="7" selection-end-column="78" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/separar_datos_padron_por_municipio.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/Alcalá de Henares_datos_padron_edad_20181018.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crear_mapa_pob_migrante.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-190">
+          <caret line="26" column="49" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extraer_indicadores_demograficos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="62" column="87" selection-start-line="62" selection-start-column="67" selection-end-line="62" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crear_mapa_indicadores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="60" column="40" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/Boadilla del Monte_datos_padron_edad_20181018.csv">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

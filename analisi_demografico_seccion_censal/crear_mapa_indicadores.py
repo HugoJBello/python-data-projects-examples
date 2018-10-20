@@ -57,7 +57,8 @@ if __name__ == '__main__':
     shapefile = "data/SECC_CPV_E_20111101_01_R_INE_MADRID.shp"
     data_source = ogr.Open(shapefile, True)  # True allows to edit the shapefile
     layer = data_source.GetLayer()
-    suffix = "indicadores_demograficos_2011_c2011"
+    #suffix = "indicadores_demograficos_2011_c2011"
+    suffix = "datos_padron_edad_20181018"
 
     route_to_csv_files = "tmp/"
 
